@@ -34,7 +34,7 @@ tab-bar tab-bar-item:selected {
   color: #1596f7;
 }
 
-tab-bar-item#settings {
+tab-bar-item#geolocation {
   background-image: url(icons/cog.svg);
 }
 

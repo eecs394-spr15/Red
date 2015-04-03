@@ -1,0 +1,31 @@
+<div ng-controller="IndexController">
+  <super-navbar>
+    <super-navbar-title>
+      Tinder Index
+    </super-navbar-title>
+  </super-navbar>
+
+  <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
+  <div ng-hide="showSpinner">
+    <ul class="list" ng-hide="tinders.length == 0">
+
+      <super-navigate location="tinder#show" data-params-id="{{ tinder.id }}" ng-repeat="tinder in tinders">
+        <li class="item item-icon-right">
+          <span ng-bind="tinder['uname']"></span>
+          <i class="icon super-ios7-arrow-right"></i>
+        </li>
+      </super-navigate>
+
+    </ul>
+
+    <h4 ng-show="tinders.length == 0" class="assertive padding">
+      No tinders found. Create one?
+    </h4>
+
+    <super-modal-show location="tinder#new">
+      <button class="button button-full button-positive">
+        Create a new tinder
+      </button>
+    </super-modal-show>
+  </div>
+</div>

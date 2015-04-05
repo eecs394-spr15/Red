@@ -1,0 +1,24 @@
+
+Good4Trading Relational Database Design 
+
+Table user {
+ uid integer (primary key)
+ username string (unique)
+ ..other information based on demand
+}
+
+Table object {
+ objectId integer (primary key)
+ owner (user-uid) 
+ title string
+ description string
+ price_range integer
+ ..other information based on demand
+}
+
+Table matchRequest {
+  sender (user-uid primary key)
+  receiver (user-uid primary key)
+  item (object-objectId primary key)
+  price_range integer
+}

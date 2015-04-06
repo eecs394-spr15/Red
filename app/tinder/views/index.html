@@ -51,14 +51,12 @@ function addItemToList(title, description, url) {
         <h2>'+ title +'</h2> \
         <p> '+ description + ' </p> \
         <div class="buttons"> \
-          <div class="col-top"> \
-            <button class="button button-icon icon button-clear button-positive"> \
-            <i class="icon super-ios7-checkmark-outline"></i> \
-            </button> \
-            <br> \
-            <button class="button button-icon icon  button-clear button-positive"> \
-            <i class="icon super-ios7-close-outline"></i> \
-            </button> \
+          <div class="col col-center"> \
+            <super-modal-show location="tinder#items"> \
+            	<button class="button button-large button-outline button-balanced"> \
+            		Trade \
+            	</button> \
+            </super-modal-show> \
           </div> \
         </div> \
       </a>';

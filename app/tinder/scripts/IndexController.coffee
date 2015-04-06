@@ -1,11 +1,11 @@
-angular
-  .module('tinder')
-  .controller("IndexController", ($scope, Tinder, supersonic) ->
-    $scope.tinders = null
-    $scope.showSpinner = true
+angular.module('tinder').controller 'IndexController', ($scope, supersonic) ->
+  # Controller functionality here
+  options = message: '\n\n Contact Liam at:\n (781)-801-2486'
 
-    Tinder.all().whenChanged (tinders) ->
-      $scope.$apply ->
-        $scope.tinders = tinders
-        $scope.showSpinner = false
-  )
+  $scope.showMatch = ->
+    supersonic.ui.dialog.alert('You Have a Match!!', options).then ->
+      supersonic.logger.log 'Alert closed.'
+      return
+    return
+
+  return

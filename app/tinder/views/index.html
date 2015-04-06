@@ -1,23 +1,18 @@
 <div ng-controller="IndexController">
   <super-navbar>
     <super-navbar-title>
-      Tinder Index
+      Item List
     </super-navbar-title>
   </super-navbar>
 
   <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
   <div ng-hide="showSpinner">
-    <ul class="list" ng-hide="tinders.length == 0">
+ <p id="item-list"></p> 
 
+<!--
       <super-navigate location="tinder#show" data-params-id="{{ tinder.id }}" ng-repeat="tinder in tinders">
         <a class="item item-thumbnail-left item-button-right" href="#">
 
-          <img ng-src="{{ tinder.uid }}"> 
-
-          <h2><span ng-bind="tinder['uname']"></span></h2>
-          <p><span ng-bind="tinder['good']"></span></p>
-
-          <div class="buttons">
             <div class="col-top">
               <button class="button button-icon button-clear button-energized" id="like-check" ng-class="{'icon super-ios7-checkmark': like, 'icon super-ios7-checkmark-outline': !like}" ng-click="like=!like ; remove(tinder.id)">
             </button>
@@ -29,7 +24,7 @@
 
         </a>
       </super-navigate>
-
+-->
     </ul>
 
     <h4 ng-show="tinders.length == 0" class="assertive padding">
@@ -38,7 +33,7 @@
 
     <super-modal-show location="tinder#new">
       <button class="button button-full button-positive">
-        Create a new tinder
+        Post a new item
       </button>
     </super-modal-show>
   </div>
@@ -48,11 +43,11 @@
 <script>
 Parse.initialize("u2bfRPj1KCw1vgvHBcYL6rmcNz3UfsJV83Dd1AKB", "nVbK9d630ykRnibWoFrK7S9ntLkXveBPEGeXQDL7");
 pullItems();
-function addItemToList(title, description) {
+function addItemToList(title, description, url) {
 	document.getElementById("item-list").innerHTML =
 		document.getElementById("item-list").innerHTML + 
 	 '      <a class="item item-thumbnail-left item-button-right" href="#"> \
-        <img src="Couch.jpg"> \
+        <img src=' + url + '> \
         <h2>'+ title +'</h2> \
         <p> '+ description + ' </p> \
         <div class="buttons"> \
@@ -85,9 +80,14 @@ function createSample () {
 function pullItems () {
 	var ItemForSale = Parse.Object.extend("ItemForSale");
 	var query = new Parse.Query(ItemForSale);
-	query.get("7hBkPZWlPQ", {
-		success: function(anItem) {
-			addItemToList(anItem.get("title"),anItem.get("description"));
+	query.descending("createdAt");
+        query.limit(10);
+	query.find({
+		success: function(queries) {
+		  for(var i=0;i<queries.length;i++){
+			var anItem = queries[i];
+			addItemToList(anItem.get("title"),anItem.get("description"), anItem.get("url"));
+		}
 		},
 		error: function(anItem,error) {
 			alert('Failed to query object, with error code: ' + error.message);

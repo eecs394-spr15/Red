@@ -61,11 +61,13 @@ function addItemToList(title, description, url) {
         </div> \
       </a>';
 }
-function createSample () {
+function postItems (title, description, url, userId) {
 	var ItemForSale = Parse.Object.extend("ItemForSale");
 	var anItem = new ItemForSale;
-	anItem.set("title","bike");
-	anItem.set("description","brand new bike");
+	anItem.set("title",title);
+	anItem.set("description",description);
+	anItem.set("url", url);
+	anItem.set("user", userId);
 	anItem.save(null, {
 		success: function(anItem) {
 			//alert('New item created with objectId: '+anItem.id);

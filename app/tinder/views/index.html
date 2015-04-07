@@ -12,16 +12,13 @@
 <!--
       <super-navigate location="tinder#show" data-params-id="{{ tinder.id }}" ng-repeat="tinder in tinders">
         <a class="item item-thumbnail-left item-button-right" href="#">
-
             <div class="col-top">
               <button class="button button-icon button-clear button-energized" id="like-check" ng-class="{'icon super-ios7-checkmark': like, 'icon super-ios7-checkmark-outline': !like}" ng-click="like=!like ; remove(tinder.id)">
             </button>
               <br>
               <button class="button button-icon button-clear button-assertive" id="like-x" ng-class="{'icon super-ios7-close': liked, 'icon super-ios7-close-outline': !liked}" ng-click="liked=!liked ; remove(tinder.id)"> </button>
-
             </div>
           </div>
-
         </a>
       </super-navigate>
 -->
@@ -44,74 +41,54 @@
 Parse.initialize("u2bfRPj1KCw1vgvHBcYL6rmcNz3UfsJV83Dd1AKB", "nVbK9d630ykRnibWoFrK7S9ntLkXveBPEGeXQDL7");
 pullItems();
 function addItemToList(title, description, url) {
-	document.getElementById("item-list").innerHTML =
-		document.getElementById("item-list").innerHTML + 
-	 '      <a class="item item-thumbnail-left item-button-right" href="#"> \
+  document.getElementById("item-list").innerHTML =
+    document.getElementById("item-list").innerHTML + 
+   '      <a class="item item-thumbnail-left item-button-right" href="#"> \
         <img src=' + url + '> \
         <h2>'+ title +'</h2> \
         <p> '+ description + ' </p> \
         <div class="buttons"> \
-
           <div class="col col-center"> \
             <super-modal-show location="tinder#items"> \
-            	<button class="button button-large button-outline button-balanced"> \
-            		Trade \
-            	</button> \
+              <button class="button button-large button-outline button-balanced"> \
+                Trade \
+              </button> \
             </super-modal-show> \
-
-          <div class="col-top"> \
-          <super-modal-show location="tinder#new">\
-            <button class="button button-icon icon button-clear button-positive"> \
-            <i class="icon super-ios7-checkmark-outline"></i> \
-            </button> \
-            </super-modal-show>\
-            <br> \
-            <button class="button button-icon icon  button-clear button-positive"> \
-            <i class="icon super-ios7-close-outline"></i> \
-            </button> \
-
           </div> \
         </div> \
       </a>';
 }
-<<<<<<< Updated upstream
 function postItems (title, description, url, userId) {
-=======
-
-function createSample () {
->>>>>>> Stashed changes
-	var ItemForSale = Parse.Object.extend("ItemForSale");
-	var anItem = new ItemForSale;
-	anItem.set("title",title);
-	anItem.set("description",description);
-	anItem.set("url", url);
-	anItem.set("user", userId);
-	anItem.save(null, {
-		success: function(anItem) {
-			//alert('New item created with objectId: '+anItem.id);
-		},
-		error: function(anItem,error) {
-			alert('Failed to create new object, with error code: ' + error.message);
-		}
-	});
+  var ItemForSale = Parse.Object.extend("ItemForSale");
+  var anItem = new ItemForSale;
+  anItem.set("title",title);
+  anItem.set("description",description);
+  anItem.set("url", url);
+  anItem.set("user", userId);
+  anItem.save(null, {
+    success: function(anItem) {
+      //alert('New item created with objectId: '+anItem.id);
+    },
+    error: function(anItem,error) {
+      alert('Failed to create new object, with error code: ' + error.message);
+    }
+  });
 }
-
 function pullItems () {
-	var ItemForSale = Parse.Object.extend("ItemForSale");
-	var query = new Parse.Query(ItemForSale);
-	query.descending("createdAt");
+  var ItemForSale = Parse.Object.extend("ItemForSale");
+  var query = new Parse.Query(ItemForSale);
+  query.descending("createdAt");
         query.limit(10);
-	query.find({
-		success: function(queries) {
-		  for(var i=0;i<queries.length;i++){
-			var anItem = queries[i];
-			addItemToList(anItem.get("title"),anItem.get("description"), anItem.get("url"));
-		}
-		},
-		error: function(anItem,error) {
-			alert('Failed to query object, with error code: ' + error.message);
-		}
-	});
+  query.find({
+    success: function(queries) {
+      for(var i=0;i<queries.length;i++){
+      var anItem = queries[i];
+      addItemToList(anItem.get("title"),anItem.get("description"), anItem.get("url"));
+    }
+    },
+    error: function(anItem,error) {
+      alert('Failed to query object, with error code: ' + error.message);
+    }
+  });
 }
-
 </script>

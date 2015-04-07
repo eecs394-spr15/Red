@@ -4,6 +4,9 @@
     <super-navbar-title>
       Good4Trade
     </super-navbar-title>
+    <super-navbar-button class="item-icon-right" side="right" location="tinder#drawer">
+     ooo
+    </super-navbar-button>
   </super-navbar>
 
   <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
@@ -41,7 +44,7 @@ function addItemToList(title, description, url) {
         <h2>'+ title +'</h2> \
         <p> '+ description + ' </p> \
         <div class="buttons"> \
-          <div class="col col-center"> \
+          <div class="col col-center padding-top"> \
             <super-modal-show location="Good4Trade#items"> \
               <button class="button button-large button-outline button-balanced"> \
                 Trade \

@@ -1,11 +1,9 @@
+
 <div ng-controller="IndexController">
   <super-navbar>
     <super-navbar-title>
-      G4T
+      Good4Trade
     </super-navbar-title>
-    <super-navbar-button class="item-icon-right" side="right" location="tinder#drawer">
-     ooo
-    </super-navbar-button>
   </super-navbar>
 
   <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
@@ -25,15 +23,12 @@
         </a>
       </super-navigate>
 -->
-    </ul>
 
-    <h4 ng-show="tinders.length == 0" class="assertive padding">
-      No tinders found. Create one?
-    </h4>
   </div>
 
 </div>
 
+<!-- parse script , referenced in html by the id 'item list' -->
 <script>
 Parse.initialize("eQLx1O6y08roi9FxLvTY5lOLdFeZ3NtmHO0tTNQF", "0fJ1VZtzTJS2d2FC4U4DxUscRYGF6Ix5Jg60W5rn");
 
@@ -47,7 +42,7 @@ function addItemToList(title, description, url) {
         <p> '+ description + ' </p> \
         <div class="buttons"> \
           <div class="col col-center"> \
-            <super-modal-show location="tinder#items"> \
+            <super-modal-show location="Good4Trade#items"> \
               <button class="button button-large button-outline button-balanced"> \
                 Trade \
               </button> \

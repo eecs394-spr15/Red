@@ -1,5 +1,26 @@
-<super-modal-hide>
-  <button class="button button-block">
-      Hide modal
-  </button>
-</super-modal-hide>
+<div ng-controller="ItemsController">
+	<super-navbar>
+		<super-navbar-button ng-click="cancel()">
+			Cancel
+		</super-navbar-button>
+	    <super-navbar-title>
+	      Your Items
+	    </super-navbar-title>
+	</super-navbar>
+	<div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
+	<div ng-hide="showSpinner">
+	<a class="item item-thumbnail-left item-button-right" href="#">
+		<img src='/images/Couch.jpg'>
+        <h2>title</h2> 
+        <p>description</p>
+        <div class="buttons">
+          <div class="col col-center">
+            <super-modal-hide>
+            	<button class="button button-large button-outline button-positive">
+            		Offer
+            	</button>
+            </super-modal-hide>
+          </div>
+        </div>
+      </a>
+</div>

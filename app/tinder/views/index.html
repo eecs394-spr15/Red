@@ -51,17 +51,35 @@ function addItemToList(title, description, url) {
         <h2>'+ title +'</h2> \
         <p> '+ description + ' </p> \
         <div class="buttons"> \
+
           <div class="col col-center"> \
             <super-modal-show location="tinder#items"> \
             	<button class="button button-large button-outline button-balanced"> \
             		Trade \
             	</button> \
             </super-modal-show> \
+
+          <div class="col-top"> \
+          <super-modal-show location="tinder#new">\
+            <button class="button button-icon icon button-clear button-positive"> \
+            <i class="icon super-ios7-checkmark-outline"></i> \
+            </button> \
+            </super-modal-show>\
+            <br> \
+            <button class="button button-icon icon  button-clear button-positive"> \
+            <i class="icon super-ios7-close-outline"></i> \
+            </button> \
+
           </div> \
         </div> \
       </a>';
 }
+<<<<<<< Updated upstream
 function postItems (title, description, url, userId) {
+=======
+
+function createSample () {
+>>>>>>> Stashed changes
 	var ItemForSale = Parse.Object.extend("ItemForSale");
 	var anItem = new ItemForSale;
 	anItem.set("title",title);
@@ -77,6 +95,7 @@ function postItems (title, description, url, userId) {
 		}
 	});
 }
+
 function pullItems () {
 	var ItemForSale = Parse.Object.extend("ItemForSale");
 	var query = new Parse.Query(ItemForSale);

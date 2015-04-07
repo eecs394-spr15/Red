@@ -1,4 +1,5 @@
-<div ng-controller="ItemsController">
+
+<div ng-controller="IndexController">
 	<super-navbar>
 		<super-navbar-button ng-click="cancel()">
 			Cancel
@@ -16,7 +17,7 @@
         <div class="buttons">
           <div class="col col-center">
             <super-modal-hide>
-            	<button class="button button-large button-outline button-positive">
+            	<button class="button button-large button-outline button-positive" ng-click="showMatch()">
             		Offer
             	</button>
             </super-modal-hide>

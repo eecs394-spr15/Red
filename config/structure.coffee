@@ -22,7 +22,7 @@ module.exports =
 #    }
 #  ]
    rootView:
-     location: "tinder#index"
+     location: "Good4Trade#index"
 
   preloads: [
     {

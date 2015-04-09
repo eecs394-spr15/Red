@@ -8,8 +8,23 @@
 
   <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
   <div ng-hide="showSpinner">
- <p id="item-list"></p> 
-
+	 <!--
+<p id="item-list"></p> 
+-->
+<a ng-repeat="mitem in items" class="item item-thumbnail-left item-button-right" href="#">
+	<img   src= {{mitem.url}}>
+        <h2 > {{mitem.title}}</h2>
+        <p > {{mitem.description}}</p>
+        <div class="buttons">
+          <div class="col col-center padding-top">
+            <super-modal-show location="Good4Trade#items">
+              <button class="button button-large button-outline button-balanced">
+                Trade 
+              </button>
+            </super-modal-show>
+          </div>
+        </div>
+      </a>
 <!--
       <super-navigate location="tinder#show" data-params-id="{{ tinder.id }}" ng-repeat="tinder in tinders">
         <a class="item item-thumbnail-left item-button-right" href="#">
@@ -30,7 +45,7 @@
 
 <!-- parse script , referenced in html by the id 'item list' -->
 <script>
-Parse.initialize("eQLx1O6y08roi9FxLvTY5lOLdFeZ3NtmHO0tTNQF", "0fJ1VZtzTJS2d2FC4U4DxUscRYGF6Ix5Jg60W5rn");
+/*Parse.initialize("eQLx1O6y08roi9FxLvTY5lOLdFeZ3NtmHO0tTNQF", "0fJ1VZtzTJS2d2FC4U4DxUscRYGF6Ix5Jg60W5rn");
 
 pullItems();
 function addItemToList(title, description, url) {
@@ -84,4 +99,5 @@ function pullItems () {
     }
   });
 }
+*/
 </script>

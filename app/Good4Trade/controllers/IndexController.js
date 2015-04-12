@@ -48,13 +48,21 @@ $scope.uploadFile = function(files) {
 
 };
 
-	$scope.savedImage =function(){
+	$scope.saveImage =function(){
           var itemForSale = new ItemForSale();
 	  itemForSale.set("title", $scope.newItem.title);
           itemForSale.set("description", $scope.newItem.description);
 	  itemForSale.set("userID", 1); 
+	 /* var fileUpload = $("#uploadFile")[0];
+          if(fileUpload.files.length>0){
+		var file = fileUpload.files[0];
+		var name = "photo.jpg";
+		var parseFile = new Parse.File(name,file);
+	  }
+	  */
+	  itemForSale.set("url", $scope.imageData);
 	  itemForSale.save();
-          document.getElementById('test').innerHTML="sss";
+          document.getElementById('test').innerHTML=$scope.imageData;
 	};
 	$scope.cancel = function(){
 		supersonic.ui.modal.hide();
@@ -87,6 +95,8 @@ $scope.uploadFile = function(files) {
 	function onSuccess(imageData) {
     var image = document.getElementById('myImage');
     image.src = "data:image/png;base64," + imageData;
+    $scope.imageData = imageData;
+    //document.getElementById('test').innerHTML = imageData;
     $scope.savedImage = "data:image/jpeg;base64," + imageData;
     //$scope.newItemImageURL = image.src;
 	}

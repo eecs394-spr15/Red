@@ -1,5 +1,5 @@
 
-<div ng-controller="AddItemsController">
+<div ng-controller="IndexController">
 	<super-navbar>
 		<super-navbar-button ng-click="cancel()">
 			Cancel
@@ -8,7 +8,41 @@
 	      Add your item
 	    </super-navbar-title>
 	</super-navbar>
+<label class="item item-input item-stacked-label">
+    <span class="input-label">Title</span>
+    <input type="text" ng-model="newItem.title"/>
+  </label>
+  
+  <label class="item item-input item-stacked-label">
+    <span class="input-label">Description</span>
+    <input type="text" ng-model="newItem.description"/>
+  </label>
+   <label class="item item-input item-stacked-label">
+    <span class="input-label">What do you want to trade for?</span>
+    <input type="text" ng-model="newItem.wishlist"/>
+  </label>
+ 
+  <label class="item item-input item-stacked-label">
+    <span class="input-label">Upload Image</span>
+    <input type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)"/>
+  </label>
+  
 
+  <br>
+
+  <button ng-click="savedImage()" class="button button-block button-positive">Save</button>
+  <p id="test"></p>
+<!--<form name="addItemForm">
+  Title
+  <input type="text" name="title" ng-model="newItem.title" />
+  Description
+  <input type="text" name="description" ng-model="newItem.description" />
+  Attach Image
+  <input type="file" name="picture" ng-model="newItem.picture"/>
+  
+</form>
+    --> 
+<!--
 	<div class="list">
 	  <label class="item item-input">
 	    <input type="text" placeholder="First Name">
@@ -26,4 +60,5 @@
 	</button>
 	
 	<img id = 'base64image' data-ng-src="savedImage"> </img>
+-->
 </div>	

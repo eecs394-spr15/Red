@@ -1,10 +1,17 @@
 g4tapp.controller("AddItemsController", function($scope,supersonic){
-	
-	$scope.savedImage ="";
+ // $scope.newItem = {title: 'tt', description: '', picture: ''};
+
+
+	$scope.savedImage =function(){
+          var itemForSale = new ItemForSale();
+	  itemForSale.set("title", "mTitle");
+          itemForSale.save();
+          document.getElementById('test').innerHTML="sss";
+	};
 
 	$scope.cancel = function(){
 		supersonic.ui.modal.hide();
-	}
+	};
 
 	var options = {
 	  quality: 50,

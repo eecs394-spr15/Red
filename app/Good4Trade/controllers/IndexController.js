@@ -27,4 +27,93 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 	}
   });
 // $scope.url = 'http://images.craigslist.org/00303_8EJbdKNmkNQ_600x450.jpg';	
+
+ // $scope.newItem = {title: 'tt', description: '', picture: ''};
+
+$scope.newItem = [
+	{url: 'http://images.craigslist.org/00303_8EJbdKNmkNQ_600x450.jpg',
+	title: 'whatever',
+	description: 'whatever'}
+  ];
+$scope.uploadFile = function(files) {
+    var fd = new FormData();
+    //Take the first selected file
+    fd.append("file", files[0]);
+
+    $http.post(uploadUrl, fd, {
+        withCredentials: true,
+        headers: {'Content-Type': undefined },
+        transformRequest: angular.identity
+    }).success( "...all right!..." ).error( "..damn!..." );
+
+};
+
+	$scope.savedImage =function(){
+          var itemForSale = new ItemForSale();
+	  itemForSale.set("title", $scope.newItem.title);
+          itemForSale.set("description", $scope.newItem.description);
+	  itemForSale.set("userID", 1); 
+	  itemForSale.save();
+          document.getElementById('test').innerHTML="sss";
+	};
+	$scope.cancel = function(){
+		supersonic.ui.modal.hide();
+	};
+
+	var options = {
+	  quality: 50,
+	  allowEdit: true,
+	  targetWidth: 300,
+	  targetHeight: 300,
+	  //encodingType: "png",
+	  saveToPhotoAlbum: true,
+	  destinationType: "dataURL"
+	};
+
+
+	$scope.getPicture = function(){
+		
+		navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+    	destinationType: Camera.DestinationType.DATA_URL
+		});
+
+		/*supersonic.media.camera.takePicture(options).then( function(result){
+	  		$scope.savedImage = "data:image/jpeg;base64, " + result;
+		}); */
+
+	}
+
+	
+	function onSuccess(imageData) {
+    var image = document.getElementById('myImage');
+    image.src = "data:image/png;base64," + imageData;
+    $scope.savedImage = "data:image/jpeg;base64," + imageData;
+    //$scope.newItemImageURL = image.src;
+	}
+
+	function onFail(message) {
+    alert('Failed because: ' + message);
+	}
+
 });
+/*
+.directive('fileread', function () {
+    return {
+        scope: {
+            fileread: "="
+        },
+        link: function (scope, element, attributes) {
+            element.bind("change", function (changeEvent) {
+                var reader = new FileReader();
+                reader.onload = function (loadEvent) {
+                    scope.$apply(function () {
+                        scope.fileread = loadEvent.target.result;
+                    });
+                }
+                reader.readAsDataURL(changeEvent.target.files[0]);
+            });
+        }
+    }
+});
+*/
+

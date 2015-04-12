@@ -52,7 +52,7 @@ $scope.uploadFile = function(files) {
           var itemForSale = new ItemForSale();
 	  itemForSale.set("title", $scope.newItem.title);
           itemForSale.set("description", $scope.newItem.description);
-	  itemForSale.set("userID", 1); 
+	  itemForSale.set("userID", $scope.newItem.userID); 
 	 /* var fileUpload = $("#uploadFile")[0];
           if(fileUpload.files.length>0){
 		var file = fileUpload.files[0];
@@ -60,7 +60,8 @@ $scope.uploadFile = function(files) {
 		var parseFile = new Parse.File(name,file);
 	  }
 	  */
-	  itemForSale.set("url", $scope.imageData);
+	  var parseFile = new Parse.File("photo.jpg", {base64:$scope.imageData});
+	  itemForSale.set("picture", parseFile);
 	  itemForSale.save();
           document.getElementById('test').innerHTML=$scope.imageData;
 	};
@@ -84,11 +85,11 @@ $scope.uploadFile = function(files) {
 		navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
     	destinationType: Camera.DestinationType.DATA_URL
 		});
-
+		
 		/*supersonic.media.camera.takePicture(options).then( function(result){
-	  		$scope.savedImage = "data:image/jpeg;base64, " + result;
-		}); */
-
+	  		$scope.imageData= "data:image/jpeg;base64, " + result;
+		}); 
+*/
 	}
 
 	

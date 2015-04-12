@@ -1,0 +1,29 @@
+
+<div ng-controller="AddItemsController">
+	<super-navbar>
+		<super-navbar-button ng-click="cancel()">
+			Cancel
+		</super-navbar-button>
+	    <super-navbar-title>
+	      Add your item
+	    </super-navbar-title>
+	</super-navbar>
+
+	<div class="list">
+	  <label class="item item-input">
+	    <input type="text" placeholder="First Name">
+	  </label>
+	  <label class="item item-input">
+	    <input type="text" placeholder="Last Name">
+	  </label>
+	  <label class="item item-input">
+	    <textarea placeholder="Comments"></textarea>
+	  </label>
+	</div>
+
+	<button ng-click = "getPicture()" class="button button-block button-positive">
+	     Add Picture
+	</button>
+	
+	<img id = 'base64image' data-ng-src="savedImage"> </img>
+</div>	

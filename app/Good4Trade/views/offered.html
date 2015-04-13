@@ -1,28 +1,15 @@
 <div ng-controller="ItemsController">
 	<super-navbar>
-		<super-navbar-button ng-click="cancel()">
-			Cancel
-		</super-navbar-button>
+        <super-navbar-button ng-click="cancel()">
+            Cancel
+        </super-navbar-button>
 	    <super-navbar-title>
-	      Your Items
+	      Offered Items
 	    </super-navbar-title>
 	</super-navbar>
 	<div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
 	<div ng-hide="showSpinner">
-	
-        <label class="item item-input item-stacked-label">
-	 <span class="input-label"> Please enter your phone number</span>
-	 <input type="text" ng-model="userPhoneNum"/>
-	</label>
-	
-         <label class="item item-input item-stacked-label">
-	 <span class="input-label"> Please enter your password</span>
-	 <input type="text" ng-model="userPhoneNum"/>
-	</label>
-         
-         
-
-         <div class="list">
+	<div class="list">
 		<a class="item item-thumbnail-left item-button-right" href="#">
 			<img src='/images/minimoto.jpg'>
     	    <h2>Mini Motorcycle</h2> 
@@ -31,7 +18,7 @@
     	      <div class="col col-center padding-top">
     	        <super-modal-hide>
     	        	<button class="button button-large button-outline button-positive" ng-click="showMatch()">
-    	        		Offer
+    	        		Accept
     	        	</button>
     	        </super-modal-hide>
     	      </div>
@@ -44,8 +31,8 @@
     	    <div class="buttons">
     	      <div class="col col-center padding-top">
     	        <super-modal-hide>
-    	        	<button class="button button-large button-outline button-positive">
-    	        		Offer
+    	        	<button class="button button-large button-outline button-positive" ng-click="showMatch()">
+    	        		Accept
     	        	</button>
     	        </super-modal-hide>
     	      </div>
@@ -58,8 +45,8 @@
     	    <div class="buttons">
     	      <div class="col col-center padding-top">
     	        <super-modal-hide>
-    	        	<button class="button button-large button-outline button-positive">
-    	        		Offer
+    	        	<button class="button button-large button-outline button-positive" ng-click="showMatch()">
+    	        		Accept
     	        	</button>
     	        </super-modal-hide>
     	      </div>

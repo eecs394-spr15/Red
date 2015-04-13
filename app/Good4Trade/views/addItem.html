@@ -1,8 +1,10 @@
 <div ng-controller="IndexController">
 <super-navbar>
-		<super-navbar-button ng-click="cancel()">
+	<!--
+	<super-navbar-button ng-click="cancel()">
 			Cancel
 		</super-navbar-button>
+	-->
 	    <super-navbar-title>
 	      Add your item
 	    </super-navbar-title>
@@ -38,7 +40,7 @@
   <br>
   <img id = 'myImage' data-ng-src="savedImage"/> 
 
-  <button ng-click="saveImage()" class="button button-block button-positive">Save</button>
+  <button ng-click="saveImage()" width=400 height=500 class="button button-block button-positive">Save</button>
   <p id="test"></p>
 <!--<form name="addItemForm">
   Title

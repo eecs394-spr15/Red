@@ -37,9 +37,11 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 
 
 $scope.newItem = [
-	{url: 'http://images.craigslist.org/00303_8EJbdKNmkNQ_600x450.jpg',
+	{url: 'whatever',
 	title: 'whatever',
-	description: 'whatever'}
+	description: 'whatever',
+	wishlist: 'whatever',
+	userID: 'whatever'}
   ];
 
 
@@ -48,6 +50,7 @@ $scope.saveImage =function(){
 	  itemForSale.set("title", $scope.newItem.title);
           itemForSale.set("description", $scope.newItem.description);
 	  itemForSale.set("userID", $scope.newItem.userID); 
+	  itemForSale.set("wishList", $scope.newItem.wishlist);
           var parseFile = new Parse.File("photo.jpg", {base64:$scope.imageData});
 	  itemForSale.set("picture", parseFile);
 	  itemForSale.save();
@@ -57,13 +60,15 @@ $scope.saveImage =function(){
 
 	  //var objectID = itemForSale.id;
 	  //alert(objectID);
-	  userQuery.equalTo("phone",$scope.newItem.userID.toString());
-	  userQuery.find().then(function(thisUser){
-		thisUser.myItems.add("aa");
-		alert("yes!!");
+	  userQuery.equalTo("phone",$scope.newItem.userID);
+	  userQuery.find().then(function(theseUser){
+		document.getElementById('test').innerHTML="sss";
+		thisUser = theseUser[0];
+		thisUser.set("myItems", ["aa","bb"]);
+		thisUser.save();
+
 	  });
-	  //userQuery.save();
-	  supersonic.ui.layers.pop();
+	  //supersonic.ui.layers.pop();
 
           //document.getElementById('test').innerHTML=$scope.imageData;
 };

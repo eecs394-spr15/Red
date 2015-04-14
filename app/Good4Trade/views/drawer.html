@@ -17,48 +17,19 @@
     <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
     <div ng-hide="showSpinner">
 
-    <div class="list">
-    <a class="item item-thumbnail-left item-button-right" href="#">
-      <img src='/images/minimoto.jpg'>
-          <h2>Mini Motorcycle</h2> 
-          <p>Orange Monster design.</p>
-          <div class="buttons">
+    <a ng-repeat="mitem in myitems" class="item item-thumbnail-left item-button-right" href="#">
+    <img   src= {{mitem.picture}}>
+  
+        <h2 > {{mitem.title}}</h2>
+        <p > {{mitem.description}}</p>
+        <div class="buttons">
           <div class="col col-center padding-top">
-            <super-modal-show location="Good4Trade#offered">
+            <super-modal-show location="Good4Trade#items">
               <button class="button button-large button-outline button-balanced">
-                3 offers 
+                {{mitem.offeredItemsLength}} Offers
               </button>
             </super-modal-show>
           </div>
         </div>
       </a>
-      <a class="item item-thumbnail-left item-button-right" href="#">
-      <img src='/images/babymonitor.jpg'>
-          <h2>Baby Monitor</h2> 
-          <p>No description given.</p>
-          <div class="buttons">
-          <div class="col col-center padding-top">
-            <!--<super-modal-show location="Good4Trade#offered"> -->
-              <button class="button button-large button-outline button-balanced">
-                0 offers
-              </button>
-            <!--</super-modal-show> -->
-          </div>
-        </div>
-      </a>
-      <a class="item item-thumbnail-left item-button-right" href="#">
-      <img src='/images/oldblackberry.JPG'>
-          <h2>Blackberry</h2> 
-          <p>Blackberry 7290</p>
-          <div class="buttons">
-          <div class="col col-center padding-top">
-            <super-modal-show location="Good4Trade#offered">
-              <button class="button button-large button-outline button-balanced">
-                3 Offers
-              </button>
-            </super-modal-show>
-          </div>
-        </div>
-      </a>
-    </div>
 

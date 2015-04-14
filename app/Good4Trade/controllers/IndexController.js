@@ -4,7 +4,19 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 	//initializing items
 	var ItemForSale = Parse.Object.extend("ItemForSale");
 	var query = new Parse.Query(ItemForSale);
+	var query2 = new Parse.Query(ItemForSale);
 
+	$scope.myitems = [];
+	  // TO DO
+	     query2.equalTo("userID", "1234");
+	     query2.find().then(function(results){
+	        for(var i = 0; i < results.length; i++){
+	          iItem = results[i];
+	          $scope.myitems.push({url:iItem.get("url"), title:iItem.get("title"), description:iItem.get("description"), 
+	            picture:iItem.get("picture").url(),offeredItemsLength: iItem.get("offeredItems").length});
+	        }
+	      });
+	     
 	$scope.items = [];
 	 
 	query.descending("createdAt");

@@ -1,126 +1,129 @@
 g4tapp.controller("IndexController", function($scope,supersonic){
-   Parse.initialize("eQLx1O6y08roi9FxLvTY5lOLdFeZ3NtmHO0tTNQF", "0fJ1VZtzTJS2d2FC4U4DxUscRYGF6Ix5Jg60W5rn");
-  var ItemForSale = Parse.Object.extend("ItemForSale");
-  var query = new Parse.Query(ItemForSale);
-   $scope.findItemsByUser = function(userID){
-	// TO DO
-        
-  }
-   $scope.items = [
-	{url: 'http://images.craigslist.org/00303_8EJbdKNmkNQ_600x450.jpg',
-	title: 'whatever',
-	description: 'whatever',
-	picture: 'whatever'}
-  ];
- 
-  query.descending("createdAt");
- // query.limit(10);
-  query.first().then(function(firstItem){
- 	$scope.items = [
-	{url: firstItem.get("url"),
-	title: firstItem.get("title"),
-	description: firstItem.get("description"),
-	picture: firstItem.get("picture").url()}
-  ];
-  });
 
-  query.find().then(function(mItem){
-	for (var i = 1; i < mItem.length;i++){
-	iItem = mItem[i];
-	$scope.url =  iItem.get("url");
-	$scope.title = iItem.get("title");
-	$scope.description = iItem.get("description");	
-        $scope.picture = iItem.get("picture").url();
-	$scope.items.push({url:$scope.url,title:$scope.title,description:$scope.description, picture:$scope.picture});
-	}
-  });
+   	Parse.initialize("eQLx1O6y08roi9FxLvTY5lOLdFeZ3NtmHO0tTNQF", "0fJ1VZtzTJS2d2FC4U4DxUscRYGF6Ix5Jg60W5rn");
+	var ItemForSale = Parse.Object.extend("ItemForSale");
+	var query = new Parse.Query(ItemForSale);
 
+	$scope.findItemsByUser = function(userID){
+		// TO DO
+	  }
 
-$scope.newItem = [
-	{url: 'whatever',
-	title: 'whatever',
-	description: 'whatever',
-	wishlist: 'whatever',
-	userID: 'whatever'}
-  ];
+	$scope.items = [];
+	 
+	query.descending("createdAt");
+	 // query.limit(10);
 
-
-$scope.saveImage =function(){
-          var itemForSale = new ItemForSale();
-	  itemForSale.set("title", $scope.newItem.title);
-          itemForSale.set("description", $scope.newItem.description);
-	  itemForSale.set("userID", $scope.newItem.userID); 
-	  itemForSale.set("wishList", $scope.newItem.wishlist);
-          var parseFile = new Parse.File("photo.jpg", {base64:$scope.imageData});
-	  itemForSale.set("picture", parseFile);
-	  itemForSale.save();
-	    
-	  // adding object ID to user class
-	  var userQuery = new Parse.Query(Parse.User);
-
-	  //var objectID = itemForSale.id;
-	  //alert(objectID);
-	  userQuery.equalTo("phone",$scope.newItem.userID);
-	  userQuery.find().then(function(theseUser){
-		document.getElementById('test').innerHTML="sss";
-		thisUser = theseUser[0];
-		thisUser.set("myItems", ["aa","bb"]);
-		thisUser.save();
-
+	query.find().then(function(mItem){
+		for (var i = 0; i < mItem.length;i++){
+		iItem = mItem[i];
+		$scope.items.push({url:iItem.get("url"),title:iItem.get("title"),description:iItem.get("description"), picture:iItem.get("picture").url()});
+		}
 	  });
-	  //supersonic.ui.layers.pop();
 
-          //document.getElementById('test').innerHTML=$scope.imageData;
-};
 
-$scope.cancel = function(){
-		supersonic.ui.modal.hide();
-};
+	$scope.saveImage =function(){
+	      var itemForSale = new ItemForSale();
+		  itemForSale.set("title", $scope.newItem.title);
+	      itemForSale.set("description", $scope.newItem.description);
+		  itemForSale.set("userID", $scope.newItem.userID); 
+		  itemForSale.set("wishList", $scope.newItem.wishlist);
+	      var parseFile = new Parse.File("photo.jpg", {base64:$scope.imageData});
+		  itemForSale.set("picture", parseFile);
+		  itemForSale.save();
+		    
 
-var options = {
-	  quality: 50,
-	  allowEdit: true,
-	  targetWidth: 400,
-	  targetHeight: 500,
-	  //encodingType: "png",
-	  saveToPhotoAlbum: false,
-	  destinationType: "dataURL"
-};
+		  var currentUser = Parse.User.current();
+			if (currentUser) {
+	    	currentUser.set("username", "my_new_username")
+			} else {
+	    	  alert('phail');
+			}
 
-$scope.getPicture = function(){	
-	navigator.camera.getPicture(onSuccess, onFail, options);	
-		/*supersonic.media.camera.takePicture(options).then( function(result){
-	  		$scope.imageData= "data:image/jpeg;base64, " + result;
-		}); 
-*/
-}
 
-	
-function onSuccess(imageData) {
-    var image = document.getElementById('myImage');
-    image.src = "data:image/png;base64," + imageData;
-    $scope.imageData = imageData;
-    //document.getElementById('test').innerHTML = imageData;
-    $scope.savedImage = "data:image/jpeg;base64," + imageData;
-    //$scope.newItemImageURL = image.src;
-}
+		  // adding object ID to user class
+		  /*
+		  var userQuery = new Parse.Query(Parse.User);
+		  userQuery.equalTo("phone",$scope.newItem.userID);
+		  userQuery.find().then(function(theseUser){
+			thisUser = theseUser[0];
+			document.getElementById('test').innerHTML=thisUser.get("phone");
+			thisUser.set("email", "21132123123");
+			thisUser.save();
+		  });*/
+		  //supersonic.ui.layers.pop();
 
-function onFail(message) {
-    alert('Failed because: ' + message);
-}
+	          //document.getElementById('test').innerHTML=$scope.imageData;
+	};
 
-$scope.uploadFile = function(files) {
-    var fd = new FormData();
-    //Take the first selected file
-    fd.append("file", files[0]);
+	$scope.cancel = function(){
+			supersonic.ui.modal.hide();
+	};
 
-    $http.post(uploadUrl, fd, {
-        withCredentials: true,
-        headers: {'Content-Type': undefined },
-        transformRequest: angular.identity
-    }).success( "...all right!..." ).error( "..damn!..." );
+	var options = {
+		  quality: 50,
+		  allowEdit: true,
+		  targetWidth: 400,
+		  targetHeight: 500,
+		  //encodingType: "png",
+		  saveToPhotoAlbum: false,
+		  destinationType: "dataURL"
+	};
 
-};
+	$scope.getPicture = function(){	
+		navigator.camera.getPicture(onSuccess, onFail, options);	
+			/*supersonic.media.camera.takePicture(options).then( function(result){
+		  		$scope.imageData= "data:image/jpeg;base64, " + result;
+			}); 
+	*/
+	}
+
+		
+	function onSuccess(imageData) {
+	    var image = document.getElementById('myImage');
+	    image.src = "data:image/png;base64," + imageData;
+	    $scope.imageData = imageData;
+	    //document.getElementById('test').innerHTML = imageData;
+	    $scope.savedImage = "data:image/jpeg;base64," + imageData;
+	    //$scope.newItemImageURL = image.src;
+	}
+
+	function onFail(message) {
+	    alert('Failed because: ' + message);
+	}
+
+	$scope.signUp = function(){
+		var user = new Parse.User();
+		user.set("username", $scope.newUser.username);
+		user.set("password", $scope.newUser.password);
+		user.set("email", $scope.newUser.email);
+		// other fields can be set just like with Parse.Object
+		user.set("phone",  $scope.newUser.phone);
+		 
+		user.signUp(null, {
+		  success: function(user) {
+		    alert("success");
+		  },
+		  error: function(user, error) {
+		    // Show the error message somewhere and let the user try again.
+		    alert("Error: " + error.code + " " + error.message);
+		  }
+		});
+	}
+
+// LOGIN METHOD, USE IT LATER, not used yet
+		$scope.logIn = function(){
+		  var user = Parse.User.logIn("Testinglogin", "test", {
+			  success: function(user) {
+			    user.set("username", "newUsername");  // attempt to change username
+			    user.save(null, {
+			      success: function(user) {
+			      	 alert("successfully logged in and changed");
+			        // This succeeds, since the user was authenticated on the device
+			      }
+			    });
+			  }
+			});
+		}
 
 
 });

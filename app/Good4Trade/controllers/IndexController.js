@@ -101,6 +101,25 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 	$scope.dismissInit = function(){
 		supersonic.ui.initialView.dismiss();
 	}
+	$scope.logIn = function(){
+		  var user = Parse.User.logIn($scope.existingUser.username, 
+			$scope.existingUser.password, {
+			  success: function(user) {
+			 //   user.set("username", "newUsername");  // attempt to change username
+			    user.save(null, {
+			      success: function(user) {
+			      	 alert("successfully logged in");
+			       	supersonic.ui.initialView.dismiss();
+// This succeeds, since the user was authenticated on the device
+			      }
+			    });
+			  }
+			});
+		}
+
+
+
+
 // MyItem Controller functions
 	var query2 = new Parse.Query(ItemForSale);
 
@@ -115,22 +134,7 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 	        }
 	      });
 
-// LOGIN METHOD, USE IT LATER, not used yet
-		$scope.logIn = function(){
-		  var user = Parse.User.logIn($scope.existingUser.username, 
-			$scope.existingUser.password, {
-			  success: function(user) {
-			 //   user.set("username", "newUsername");  // attempt to change username
-			    user.save(null, {
-			      success: function(user) {
-			      	 alert("successfully logged in");
-			        // This succeeds, since the user was authenticated on the device
-			      }
-			    });
-			  }
-			});
-		}
-
+	
 
 });
 

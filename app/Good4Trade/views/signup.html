@@ -1,0 +1,39 @@
+
+<div ng-controller="IndexController">
+  <super-navbar>
+    <super-navbar-title>
+      Good4Trade
+    </super-navbar-title>
+    <super-navbar-button class="item-icon-right" side="right" location="Good4Trade#drawer">
+     ooo
+    </super-navbar-button>
+  </super-navbar>
+
+  <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
+  <div ng-hide="showSpinner">
+
+    <label class="item item-input item-stacked-label">
+    <span class="input-label">Username</span>
+    <input type="text" ng-model="newUser.username"/>
+    </label>
+  
+    <label class="item item-input item-stacked-label">
+    <span class="input-label">Password</span>
+    <input type="text" ng-model="newUser.password"/>
+     </label>
+
+    <label class="item item-input item-stacked-label">
+    <span class="input-label">Email</span>
+    <input type="text" ng-model="newUser.email"/>
+     </label>
+
+     <label class="item item-input item-stacked-label">
+    <span class="input-label">Phone</span>
+    <input type="text" ng-model="newUser.phone"/>
+     </label>
+
+     <button ng-click="signUp()" width=400 height=500 class="button button-block button-positive">Sign Up</button>
+  </div>
+
+</div>
+

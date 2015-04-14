@@ -45,4 +45,4 @@ module.exports =
   #
   initialView:
      id: "initialView"
-     location: "Good4Trade#signup"
+     location: "Good4Trade#init"

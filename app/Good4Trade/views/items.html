@@ -9,7 +9,7 @@
 	</super-navbar>
 	<div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
 	<div ng-hide="showSpinner">
-	
+
         <label class="item item-input item-stacked-label">
 	 <span class="input-label"> Please enter your phone number</span>
 	 <input type="text" ng-model="userPhoneNum"/>
@@ -20,7 +20,23 @@
 	 <input type="text" ng-model="userPhoneNum"/>
 	</label>
          
-         
+<!--
+    <a ng-repeat="mitem in myitems" class="item item-thumbnail-left item-button-right" href="#">
+    <img   src= {{mitem.picture}}>
+  
+        <h2 > {{mitem.title}}</h2>
+        <p > {{mitem.description}}</p>
+        <div class="buttons">
+          <div class="col col-center padding-top">
+            <super-modal-show location="Good4Trade#items">
+              <button class="button button-large button-outline button-balanced">
+                Offer
+              </button>
+            </super-modal-show>
+          </div>
+        </div>
+      </a>
+-->
 
          <div class="list">
 		<a class="item item-thumbnail-left item-button-right" href="#">

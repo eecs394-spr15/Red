@@ -6,20 +6,21 @@ module.exports =
 
   tabs: [
     {
-      title: "Index"
+      title: "Home"
       id: "index"
       location: "Good4Trade#index" # Supersonic module#view type navigation
+    }
+    {
+      title: "My Items"
+      id: "internet"
+      location: "Good4Trade#myitems" # URLs are supported!
     }
     {
       title: "Add Item"
       id: "geolocation"
       location: "Good4Trade#addItem"
     }
-    {
-      title: "Your Items"
-      id: "internet"
-      location: "Good4Trade#items" # URLs are supported!
-    }
+
   ]
 #   rootView:
 #     location: "Good4Trade#index"

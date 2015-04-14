@@ -100,6 +100,7 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 		user.set("phone",  $scope.newUser.phone);
 		user.signUp(null, {
 		  success: function(user) {
+		    supersonic.ui.initialView.dismiss();
 		    alert("success");
 		  },
 		  error: function(user, error) {

@@ -30,30 +30,25 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 	      var parseFile = new Parse.File("photo.jpg", {base64:$scope.imageData});
 		  itemForSale.set("picture", parseFile);
 		  itemForSale.save();
-		    
+		  updateUserArray(itemForSale); // NEED TO EXTRACT THE ID SOMEHOW...
+	};
 
-		  var currentUser = Parse.User.current();
+	function updateUserArray(itemForSale){
+			var currentUser = Parse.User.current();
 			if (currentUser) {
-	    	currentUser.set("username", "my_new_username")
+	    	currentUser.set("username", "YAYNEW");  // attempt to change username
+			currentUser.add("myItems", itemForSale.id);
+			currentUser.save(null, {
+			      success: function(user) {
+			      	 alert("successfully changed info");
+			        // This succeeds, since the user was authenticated on the device
+			      }
+			    });
 			} else {
 	    	  alert('phail');
 			}
 
-
-		  // adding object ID to user class
-		  /*
-		  var userQuery = new Parse.Query(Parse.User);
-		  userQuery.equalTo("phone",$scope.newItem.userID);
-		  userQuery.find().then(function(theseUser){
-			thisUser = theseUser[0];
-			document.getElementById('test').innerHTML=thisUser.get("phone");
-			thisUser.set("email", "21132123123");
-			thisUser.save();
-		  });*/
-		  //supersonic.ui.layers.pop();
-
-	          //document.getElementById('test').innerHTML=$scope.imageData;
-	};
+	}
 
 	$scope.cancel = function(){
 			supersonic.ui.modal.hide();

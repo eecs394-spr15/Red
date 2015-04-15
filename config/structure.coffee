@@ -15,11 +15,11 @@ module.exports =
       id: "geolocation"
       location: "Good4Trade#myitems" # URLs are supported!
     }
-    {
-      title: "Search"
-      id: "internet"
-      location: "Good4Trade#addItem"
-    }
+ #   {
+ #     title: "Search"
+ #     id: "internet"
+ #     location: "Good4Trade#addItem"
+ #   }
 
   ]
 #   rootView:

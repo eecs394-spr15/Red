@@ -1,6 +1,6 @@
 <div ng-controller="IndexController">
 	<super-navbar>
-	<super-navbar-button ng-click="cancel()">
+	    <super-navbar-button ng-click="cancel()">
 			Cancel
 		</super-navbar-button>
 
@@ -32,7 +32,7 @@
         <p > {{mitem.description}}</p>
         <div class="buttons">
           <div class="col col-center padding-top">
-            <super-modal-show location="Good4Trade#items">
+            <super-modal-show location="Good4Trade#index">
               <button class="button button-large button-outline button-balanced" ng-click="showMatch()">
                 Offer
               </button>
@@ -41,50 +41,3 @@
         </div>
       </a>
 
-<!--
-         <div class="list">
-		<a class="item item-thumbnail-left item-button-right" href="#">
-			<img src='/images/minimoto.jpg'>
-    	    <h2>Mini Motorcycle</h2> 
-    	    <p>Orange Monster design.</p>
-    	    <div class="buttons">
-    	      <div class="col col-center padding-top">
-    	        <super-modal-hide>
-    	        	<button class="button button-large button-outline button-positive" ng-click="showMatch()">
-    	        		Offer
-    	        	</button>
-    	        </super-modal-hide>
-    	      </div>
-    	    </div>
-    	</a>
-    	<a class="item item-thumbnail-left item-button-right" href="#">
-			<img src='/images/babymonitor.jpg'>
-    	    <h2>Baby Monitor</h2> 
-    	    <p>No description given.</p>
-    	    <div class="buttons">
-    	      <div class="col col-center padding-top">
-    	        <super-modal-hide>
-    	        	<button class="button button-large button-outline button-positive">
-    	        		Offer
-    	        	</button>
-    	        </super-modal-hide>
-    	      </div>
-    	    </div>
-    	</a>
-    	<a class="item item-thumbnail-left item-button-right" href="#">
-			<img src='/images/oldblackberry.JPG'>
-    	    <h2>Blackberry</h2> 
-    	    <p>Blackberry 7290</p>
-    	    <div class="buttons">
-    	      <div class="col col-center padding-top">
-    	        <super-modal-hide>
-    	        	<button class="button button-large button-outline button-positive">
-    	        		Offer
-    	        	</button>
-    	        </super-modal-hide>
-    	      </div>
-    	    </div>
-    	</a>
-    </div>
-</div>
--->

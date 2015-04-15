@@ -1,4 +1,4 @@
-<div ng-controller="IndexController">
+<div ng-controller="ItemsController">
     <super-navbar>
      <!--
       <super-navbar-button ng-click="cancel()">
@@ -9,14 +9,12 @@
         My Items
       </super-navbar-title>
       <super-navbar-button class="item-icon-right" side="right" location="Good4Trade#addItem">
-        <h3> Add </h3> 
+        <h3> Post a new item </h3> 
       </super-navbar-button>
 
     </super-navbar>
 
-    <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
-    <div ng-hide="showSpinner">
-
+    
     <a ng-repeat="mitem in myitems" class="item item-thumbnail-left item-button-right" href="#">
     <img   src= {{mitem.picture}}>
   

@@ -12,12 +12,12 @@ module.exports =
     }
     {
       title: "My Items"
-      id: "internet"
+      id: "geolocation"
       location: "Good4Trade#myitems" # URLs are supported!
     }
     {
-      title: "Add Item"
-      id: "geolocation"
+      title: "Search"
+      id: "internet"
       location: "Good4Trade#addItem"
     }
 
@@ -36,14 +36,15 @@ module.exports =
     }
   ]
 
-  # drawers:
-  #   left:
-  #     id: "leftDrawer"
-  #     location: "example#drawer"
-  #     showOnAppLoad: false
-  #   options:
-  #     animation: "swingingDoor"
-  #
+  drawers:
+    left:
+      id: "leftDrawer"
+      location: "Good4Trade#drawer"
+      showOnAppLoad: false
+    options:
+      animation: "swingingDoor"
+
+      
   initialView:
      id: "initialView"
      location: "Good4Trade#init"

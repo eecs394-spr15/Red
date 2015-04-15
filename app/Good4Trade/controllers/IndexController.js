@@ -135,9 +135,13 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 	      });
 
 	//controller from ItemsController.js
+	var contactInfo = {
+	  message: "\n\n Contact Liam at:\n (781)-801-24822",
+	  buttonLabel: "Close"
+	};
 
 	$scope.showMatch = function(){
-		supersonic.ui.dialog.alert("You Have a Match!!", options).then(function() {
+		supersonic.ui.dialog.alert("You Have a Match!!", contactInfo).then(function() {
 	  	supersonic.logger.log("Alert closed.");
 	});
 	}

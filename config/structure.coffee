@@ -4,25 +4,26 @@ module.exports =
 
   # See styling options for tabs and other native components in app/common/native-styles/ios.css or app/common/native-styles/android.css
 
-#  tabs: [
-#    {
-#      title: "Index"
-#      id: "index"
-#      location: "example#getting-started" # Supersonic module#view type navigation
-#    }
-#    {
-#      title: "Geolocation"
-#      id: "geolocation"
-#      location: "geolocation#index"
-#    }
-#    {
-#      title: "Internet"
-#      id: "internet"
-#      location: "http://google.com" # URLs are supported!
-#    }
-#  ]
-   rootView:
-     location: "Good4Trade#index"
+  tabs: [
+    {
+      title: "Home"
+      id: "index"
+      location: "Good4Trade#index" # Supersonic module#view type navigation
+    }
+    {
+      title: "My Items"
+      id: "geolocation"
+      location: "Good4Trade#myitems" # URLs are supported!
+    }
+ #   {
+ #     title: "Search"
+ #     id: "internet"
+ #     location: "Good4Trade#addItem"
+ #   }
+
+  ]
+#   rootView:
+#     location: "Good4Trade#index"
 
   preloads: [
     {
@@ -35,14 +36,15 @@ module.exports =
     }
   ]
 
-  # drawers:
-  #   left:
-  #     id: "leftDrawer"
-  #     location: "example#drawer"
-  #     showOnAppLoad: false
-  #   options:
-  #     animation: "swingingDoor"
-  #
-  # initialView:
-     #id: "initialView"
-     #location: "example#initial-view"
+  drawers:
+    left:
+      id: "leftDrawer"
+      location: "Good4Trade#drawer"
+      showOnAppLoad: false
+    options:
+      animation: "swingingDoor"
+
+      
+  initialView:
+     id: "initialView"
+     location: "Good4Trade#init"

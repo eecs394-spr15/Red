@@ -1,0 +1,28 @@
+
+<div ng-controller="IndexController">
+ 
+    <label class="item item-input item-stacked-label">
+	<span class="input-label"> Username </span>
+	<input type="text" ng-model="existingUser.username"/>
+    </label>
+     <label class="item item-input item-stacked-label">
+	<span class="input-label"> Password </span>
+	<input type="password" ng-model="existingUser.password"/>
+    </label>
+
+
+
+<div>
+     <button ng-click="logIn()" width=400 height=500 class="button button-block button-positive">Log In</button>
+</div>
+
+<div>
+<button onClick="parent.location='signup.html'" width=400 height=500 class="button button-block button-positive">Sign Up</button>
+</div>
+
+<div>
+ <button ng-click="dismissInit()" width=400 height=500 class="button button-block button-positive">skip</button>
+</div>
+
+</div>
+

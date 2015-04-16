@@ -1,64 +1,26 @@
 <div ng-controller="IndexController">
-    <super-navbar>
-     <!--
-      <super-navbar-button ng-click="cancel()">
-        Cancel
-      </super-navbar-button>
-    -->
-      <super-navbar-title>
-        My Items
-      </super-navbar-title>
-      <super-navbar-button class="item-icon-right" side="right" location="Good4Trade#addItem">
-        <h3> Add </h3> 
-      </super-navbar-button>
 
-    </super-navbar>
+  <super-navbar>
+    <super-navbar-title>
+      Drawer
+    </super-navbar-title>
+  </super-navbar>
 
-    <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
-    <div ng-hide="showSpinner">
+  <div class="padding">
 
-    <div class="list">
-    <a class="item item-thumbnail-left item-button-right" href="#">
-      <img src='/images/minimoto.jpg'>
-          <h2>Mini Motorcycle</h2> 
-          <p>Orange Monster design.</p>
-          <div class="buttons">
-          <div class="col col-center padding-top">
-            <super-modal-show location="Good4Trade#offered">
-              <button class="button button-large button-outline button-balanced">
-                3 offers 
-              </button>
-            </super-modal-show>
-          </div>
-        </div>
-      </a>
-      <a class="item item-thumbnail-left item-button-right" href="#">
-      <img src='/images/babymonitor.jpg'>
-          <h2>Baby Monitor</h2> 
-          <p>No description given.</p>
-          <div class="buttons">
-          <div class="col col-center padding-top">
-            <!--<super-modal-show location="Good4Trade#offered"> -->
-              <button class="button button-large button-outline button-balanced">
-                0 offers
-              </button>
-            <!--</super-modal-show> -->
-          </div>
-        </div>
-      </a>
-      <a class="item item-thumbnail-left item-button-right" href="#">
-      <img src='/images/oldblackberry.JPG'>
-          <h2>Blackberry</h2> 
-          <p>Blackberry 7290</p>
-          <div class="buttons">
-          <div class="col col-center padding-top">
-            <super-modal-show location="Good4Trade#offered">
-              <button class="button button-large button-outline button-balanced">
-                3 Offers
-              </button>
-            </super-modal-show>
-          </div>
-        </div>
-      </a>
-    </div>
+    <br>
+    <h3>You found me!</h3>
+    <br>
 
+    <p>This is a native drawer menu. You can add these on either side of the application, or both!</p>
+
+    <p>To close the menu, <b>swipe</b> from the edge, <b>tap</b> the original view or <b>tap</b> the button below.</p>
+
+    <br>
+    <button class="button button-positive button-block" ng-click="supersonic.ui.drawers.close()">
+      Close this menu
+    </button>
+
+  </div>
+
+</div>

@@ -133,7 +133,7 @@ if(currentUser){
 	query2.find().then(function(results){
 			for(var i = 0; i < results.length; i++){
 			iItem = results[i];
-			$scope.myitems.push({url:iItem.get("url"), title:iItem.get("title"), description:iItem.get("description"), 
+			$scope.myitems.push({url:iItem.get("url"), title:iItem.get("title"), description:iItem.get("description"),offeredItemsLength: iItem.get("offeredItems").length, 
 				picture:iItem.get("picture").url()
 				});
 			}
@@ -142,6 +142,42 @@ if(currentUser){
 function updateMyItems(){
 
 }
+
+
+//Offered items controller function
+
+	var queryOffered1 = new Parse.Query(ItemForSale);
+    var queryOffered2 = new Parse.Query(ItemForSale);
+//	var currentItem = Parse.ItemForSale.current();
+		$scope.offereditems = [];
+	  // TO DO
+
+	  	queryOffered1.equalTo("title", "Coke");
+
+	    queryOffered1.find().then(function(myself){
+   			ItemsArray = myself[0].get("offeredItems");
+   			//thisitem = myself[0];
+   			//$scope.offereditems.push({url:thisitem.get("url"),title:thisitem.get("title"),description:thisitem.get("description"), picture:thisitem.get("picture").url()});
+   			
+
+   			for (var i = 0; i <ItemsArray.length; i++){
+
+       		queryOffered2.equalTo("objectId", ItemsArray[i]);
+  			queryOffered2.find().then(function(Item){
+  				thatitem=Item[0];
+				$scope.offereditems.push({url:thatitem.get("url"),title:thatitem.get("title"),description:thatitem.get("description"), picture:thatitem.get("picture").url()});
+  			});
+  		}
+  		
+
+   		});
+/*
+	$scope.passTitle = function(){
+		$scope.myitemTitle = "Coke";
+	}	    
+
+*/
+
 
 //controller from ItemsController.js
 var contactInfo = {
@@ -153,6 +189,14 @@ message: "\n\n Contact Liam at:\n (781)-801-24822",
 $scope.showMatch = function(){
 	supersonic.ui.modal.hide();
 	supersonic.ui.dialog.alert("You Have a Match!!", contactInfo).then(function() {
+			supersonic.logger.log("Alert closed.");
+			//supersonic.ui.modal.hide();
+			});
+}
+
+$scope.tradeSuccess = function(){
+	supersonic.ui.modal.hide();
+	supersonic.ui.dialog.alert("Successfully Trade!", contactInfo).then(function() {
 			supersonic.logger.log("Alert closed.");
 			//supersonic.ui.modal.hide();
 			});

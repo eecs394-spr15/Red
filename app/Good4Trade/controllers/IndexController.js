@@ -22,8 +22,9 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 	      var itemForSale = new ItemForSale();
 		  itemForSale.set("title", $scope.newItem.title);
 	      itemForSale.set("description", $scope.newItem.description);
-		  itemForSale.set("userID", $scope.newItem.userID); 
+		  itemForSale.set("userID", "7818012486"); 
 		  itemForSale.set("wishList", $scope.newItem.wishlist);
+		  itemForSale.set("offeredItems", []);
 	      var parseFile = new Parse.File($scope.newItem.title + ".jpg", {base64:$scope.imageData});
 		  itemForSale.set("picture", parseFile);
 		  itemForSale.save().then(function(itemForSale) {
@@ -31,7 +32,7 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 			}, function(error) {
   			// the save failed.
 			});
-		  supersonic.ui.modal.hide();
+		  //supersonic.ui.modal.hide();
 	};
 
 	function updateUserArray(itemForSale){
@@ -42,6 +43,7 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 			currentUser.save(null, {
 			      success: function(user) {
 			      	 alert("successfully changed info");
+			      	 updateMyItems();
 			      }
 			    });
 			} else {
@@ -125,14 +127,18 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 
 	$scope.myitems = [];
 	  // TO DO
-	     query2.equalTo("userID", "1234");
+	     query2.equalTo("userID", "7818012486");
 	     query2.find().then(function(results){
 	        for(var i = 0; i < results.length; i++){
 	          iItem = results[i];
 	          $scope.myitems.push({url:iItem.get("url"), title:iItem.get("title"), description:iItem.get("description"), 
-	            picture:iItem.get("picture").url(),offeredItemsLength: iItem.get("offeredItems").length});
+	            picture:iItem.get("picture").url(), offeredItemsLength: iItem.get("offeredItems").length});
 	        }
 	      });
+
+function updateMyItems(){
+	   
+	 }
 
 	//controller from ItemsController.js
 	var contactInfo = {
@@ -140,14 +146,12 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 	  buttonLabel: "Close"
 	};
 
-	var options = {
-	  message: "\n\n Contact Liam at:\n (781)-801-24822",
-	  buttonLabel: "Close"
-	};
 
 	$scope.showMatch = function(){
+		supersonic.ui.modal.hide();
 		supersonic.ui.dialog.alert("You Have a Match!!", contactInfo).then(function() {
 	  	supersonic.logger.log("Alert closed.");
+	  	//supersonic.ui.modal.hide();
 	});
 	}
 

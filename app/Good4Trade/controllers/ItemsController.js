@@ -1,9 +1,12 @@
 g4tapp.controller("ItemsController", function($scope,supersonic){
+
+	Parse.initialize("eQLx1O6y08roi9FxLvTY5lOLdFeZ3NtmHO0tTNQF", "0fJ1VZtzTJS2d2FC4U4DxUscRYGF6Ix5Jg60W5rn");
+	var ItemForSale = Parse.Object.extend("ItemForSale");
 	
 	supersonic.ui.views.current.params.onValue(function(values){
-		$scope.previewId = values;
+		$scope.previewId = values.id;
 	})
-
+	
 	var options = {
 	  message: "\n\n Contact Liam at:\n (781)-801-24822",
 	  buttonLabel: "Close"
@@ -18,9 +21,9 @@ g4tapp.controller("ItemsController", function($scope,supersonic){
 	  	supersonic.logger.log("Alert closed.");
 	});
 	}
-	
+
 	// MyItem Controller functions
-	var query2 = new Parse.Query($scope.ItemForSale);
+	var query2 = new Parse.Query(ItemForSale);
 
 	$scope.myitems = [];
 	  // TO DO
@@ -34,15 +37,15 @@ g4tapp.controller("ItemsController", function($scope,supersonic){
 	      });
 
 
-	var query3 = new Parse.Query($scope.ItemForSale);
+	var query3 = new Parse.Query(ItemForSale);
 
 	$scope.addToOfferList = function(fromMylist){
-		alert(fromMylist+"offerTo"+$scope.previewId);
+		//alert(fromMylist+"offerTo"+$scope.previewId);
 		query3.get($scope.previewId,{
 			success:function(result){
 				result.addUnique("offeredItems",fromMylist);
 				result.save();
-				alert("success");
+				alert("add successfully");
 			}
 		});
 	}

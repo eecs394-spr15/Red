@@ -13,7 +13,7 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 		query.find().then(function(mItem){
 			for (var i = 0; i < mItem.length;i++){
 			iItem = mItem[i];
-			$scope.items.push({url:iItem.get("url"),title:iItem.get("title"),description:iItem.get("description"), picture:iItem.get("picture").url()});
+			$scope.items.push({id:iItem.id, url:iItem.get("url"),title:iItem.get("title"),description:iItem.get("description"), picture:iItem.get("picture").url()});
 			}
 			});
 
@@ -133,7 +133,7 @@ if(currentUser){
 	query2.find().then(function(results){
 			for(var i = 0; i < results.length; i++){
 			iItem = results[i];
-			$scope.myitems.push({url:iItem.get("url"), title:iItem.get("title"), description:iItem.get("description"),offeredItemsLength: iItem.get("offeredItems").length, 
+			$scope.myitems.push({id:iItem.id, url:iItem.get("url"), title:iItem.get("title"), description:iItem.get("description"),offeredItemsLength: iItem.get("offeredItems").length, 
 				picture:iItem.get("picture").url()
 				});
 			}

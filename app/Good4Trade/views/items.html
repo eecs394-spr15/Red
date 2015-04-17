@@ -1,9 +1,10 @@
-<div ng-controller="IndexController">
+<div ng-controller="ItemsController">
 	<super-navbar>
+	<!--
 	    <super-navbar-button ng-click="cancel()">
 			Cancel
 		</super-navbar-button>
-
+	-->
 	    <super-navbar-title>
 	      My Items
 	    </super-navbar-title>
@@ -29,11 +30,11 @@
   <img   src= {{mitem.picture}}>
   
         <h2 > {{mitem.title}}</h2>
-        <p style="white-space: normal; width: 12em"> {{mitem.description}}</p>
+        <p style="white-space: normal; width: 10em"> {{mitem.description}}</p>
         <div class="buttons">
           <div class="col col-center padding-top">
             <super-modal-show location="Good4Trade#index">
-              <button class="button button-large button-outline button-balanced" ng-click="showMatch()">
+              <button class="button button-large button-outline button-balanced" ng-click="addToOfferList(mitem.id)">
                 Offer
               </button>
             </super-modal-show>

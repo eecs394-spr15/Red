@@ -15,11 +15,11 @@ module.exports =
       id: "geolocation"
       location: "Good4Trade#myitems" # URLs are supported!
     }
- #   {
- #     title: "Search"
- #     id: "internet"
- #     location: "Good4Trade#addItem"
- #   }
+    {
+      title: "Search"
+      id: "internet"
+      location: "Good4Trade#addItem"
+    }
 
   ]
 #   rootView:
@@ -39,7 +39,7 @@ module.exports =
   drawers:
     left:
       id: "leftDrawer"
-      location: "Good4Trade#drawer"
+      location: "drawer#drawer"
       showOnAppLoad: false
     options:
       animation: "swingingDoor"

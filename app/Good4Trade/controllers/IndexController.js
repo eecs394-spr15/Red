@@ -177,101 +177,10 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 
 
 
-//Offered items controller functions (looking at what others have offered you)
-	var queryOfferedItems = new Parse.Query(ItemForSale);
-
-	$scope.offeredItems =[{title:"Coke1", description:"bottle", 
-	        			picture:"http://files.parsetfss.com/19767582-8750-471b-bb21-4c631806f686/tfss-fb31a440-e615-47d4-862a-2c424c2de6b2-Coke.jpg", offeredItem : {}, myItem: {}}];
-
-
-	//FOR DEBUGGING VARS, DELETE LATER
-	var queryMyItemDebug = new Parse.Query(ItemForSale);
-	var queryOfferedDebug = new Parse.Query(ItemForSale);
-
-
-	queryMyItemDebug.get("ShGzNlU5q4", {
-			  success: function(myItem) {
-			    $scope.offeredItems[0].myItem = myItem;
-			  },
-			  error: function(object, error) {
-			    alert("get item failed");
-			  }
-		});
-
-	queryOfferedDebug.get("XGlAQQGLND", {
-			  success: function(offeredItem) {
-			    $scope.offeredItems[0].offeredItem = offeredItem;
-			  },
-			  error: function(object, error) {
-			    alert("get item failed");
-			  }
-		});
-
-	//END FOR DEBUGGING VARS
-	
-
-	$scope.$watch('offeredItems', function(newVal, oldVal) {
-    	//alert($scope.offeredItems[0].title);
-	});        			
-
-	$scope.displayOffers = function(myItem){
-		//$scope.offeredItems = []; //for resetting the scope
-
-		var offeredItemArray = myItem.get("offeredItems"); //returns array of object IDs of offered items
-
-		queryOfferedItems.containedIn("objectId", offeredItemArray); //constraining query
-
-		queryOfferedItems.find().then(function(queryOfferedItemResults){
-			for(var i = 0; i < queryOfferedItemResults.length; i++){
-      			var offeredItem = queryOfferedItemResults[i];
-      			//alert(offeredItem.get("title"));
-      			$scope.offeredItems.push({title:offeredItem.get("title"), description:offeredItem.get("description"), 
-        			picture:offeredItem.get("picture").url(), offeredItem : offeredItem, myItem:myItem});
-    			}
-    		//DEBUGGING, Proof that it's added to the scope, but that the view is not updated
-    		//alert($scope.offeredItems[2].offeredItem.get("title"));
-    		//$scope.offeredItems[2].offeredItem.set("title", "newestJab");
-    		//$scope.offeredItems[2].offeredItem.save();
-
-    		//do redirect;
-    		var offeredView = new supersonic.ui.View("Good4Trade#offered");
-			supersonic.ui.layers.push(offeredView);
-		});
-			
-	}
-
-
-
-
-
 //MATCHED ITEM CONTROLLER
 	//PART 1: Update matched item field in database
-
-	$scope.acceptItem = function(myItem,offeredItem){
-
-		var contactInfo = {
-			message: "\n\n Contact Liam at:\n (781)-801-24822",
-	 		buttonLabel: "Close"
-		};
-
-		supersonic.ui.dialog.alert("Successfully Traded!", contactInfo).then(function() {
-			supersonic.logger.log("Alert closed.");
-			supersonic.ui.modal.hide();
-			});
-
-		myItem.set("matchedItemID", offeredItem.id);
-		offeredItem.set("matchedItemID", myItem.id);
-
-		var myItemRelation = myItem.relation("matchedItem");
-		myItemRelation.add(offeredItem);
-		var offeredItemRelation = offeredItem.relation("matchedItem");
-		offeredItemRelation.add(myItem);
-
-		offeredItem.save();		
-		myItem.save();
-	}
-
-
+	//this is in offers controller
+	
 	//part 2 : add matched item to matched item list
 
 	$scope.matchedItemList = [];
@@ -285,28 +194,30 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 		
 
 	queryMatchedItems.find().then(function(results){
-
-		for(var i = 0; i < results.length; i++){
+		for(var i = 0; i < results.length; i++){		
       			var myItem = results[i];
-      			var relation = myItem.relation("matchedItem");
-      			var matchedItem= {};
-      			relation.query().find().then(function(matchResult){
-
-				    matchedItem= matchResult[0];
-				    //alert("successful fetch" + matchedItem.id);
-				    $scope.matchedItemList.push({ 	myItemTitle:myItem.get("title"), 
-											myItemDescription:myItem.get("description"), 
-										myItemPicture:myItem.get("picture").url(), 
-										matchedItemTitle : matchedItem.get("title"), 
-										matchedItemDescription:matchedItem.get("description"), 
-										matchedItemPicture: matchedItem.get("picture").url()
-									});	
-				 //alert($scope.matchedItemList[1].myItemTitle);
-				});		
+      			var title = myItem.get("title");
+      			var description = myItem.get("description");
+      			var picture = myItem.get("picture").url();
+      			asynchCallToUpdateMatchedItems(myItem, title, description, picture);
     	}
 	});
 
+	function asynchCallToUpdateMatchedItems(myItem, title, description, picture){
+			var relation = myItem.relation("matchedItem");
+  			var matchedItem= {};
+  			relation.query().find().then(function(matchResult){
+			    matchedItem= matchResult[0];
+			    $scope.matchedItemList.push({ 	myItemTitle: title, 
+												myItemDescription: description, 
+												myItemPicture: picture, 
+												matchedItemTitle : matchedItem.get("title"), 
+												matchedItemDescription:matchedItem.get("description"), 
+												matchedItemPicture: matchedItem.get("picture").url()
+											});	
 
+			});		
+		}
 
 
 });

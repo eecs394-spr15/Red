@@ -22,11 +22,11 @@
         <p style="white-space: normal; width: 10em"> {{mitem.description}}</p>
         <div class="buttons">
           <div class="col col-center padding-top">
-            <super-modal-show location="Good4Trade#offered">
-              <button ng-click = "displayOffers(mitem.myItem)" class="button button-large button-outline button-balanced">
+            <super-navigate location="Good4Trade#offered" data-params-id="{{mitem.id}}">
+              <button class="button button-large button-outline button-balanced">
                 {{mitem.offeredItemsLength}} Offers
               </button>
-            </super-modal-show>
+              </super-navigate>
           </div>
         </div>
       </a>

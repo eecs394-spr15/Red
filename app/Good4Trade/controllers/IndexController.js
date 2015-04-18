@@ -199,11 +199,12 @@ g4tapp.controller("IndexController", function($scope,supersonic){
       			var title = myItem.get("title");
       			var description = myItem.get("description");
       			var picture = myItem.get("picture").url();
-      			asynchCallToUpdateMatchedItems(myItem, title, description, picture);
+      			var myItemID = myItem.id;
+      			asynchCallToUpdateMatchedItems(myItem, title, description, picture, myItemID);
     	}
 	});
 
-	function asynchCallToUpdateMatchedItems(myItem, title, description, picture){
+	function asynchCallToUpdateMatchedItems(myItem, title, description, picture, myItemID){
 			var relation = myItem.relation("matchedItem");
   			var matchedItem= {};
   			relation.query().find().then(function(matchResult){
@@ -213,12 +214,19 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 												myItemPicture: picture, 
 												matchedItemTitle : matchedItem.get("title"), 
 												matchedItemDescription:matchedItem.get("description"), 
-												matchedItemPicture: matchedItem.get("picture").url()
+												matchedItemPicture: matchedItem.get("picture").url(),
+												myItemID : myItemID,
+												matchedItemID: matchedItem.id
 											});	
 
 			});		
 		}
 
+// IMPLEMENT LATER: Delete all references when trade is complete
+
+	$scope.deleteAllReferences = function(myItemID, matchedItemID){
+		alert(" to implement : delete all references upon trade completion for " + myItemID + " and " + matchedItemID);
+	}
 
 });
 

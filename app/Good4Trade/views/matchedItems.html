@@ -6,7 +6,7 @@
     </super-navbar>
 
    
-    <a ng-repeat="mitem in matchedItemList" class="list card" href="#">
+    <a ng-repeat="mitem in matchedItemList" class="list card" >
 
 	  <div class="item item-avatar">
 	    <img src={{mitem.myItemPicture}}>
@@ -18,7 +18,7 @@
 	    <img src= {{mitem.matchedItemPicture}}>
 	  </div>
 
-	  <button ng-click="" width=400 height=500 class="button button-block button-positive"> Trade Completed </button>
+	  <button ng-click="deleteAllReferences(mitem.myItemID, mitem.matchedItemID)" width=400 height=500 class="button button-block button-positive"> Trade Completed </button>
 
     </a>
 

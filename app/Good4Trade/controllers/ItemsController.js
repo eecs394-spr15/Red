@@ -49,7 +49,14 @@ g4tapp.controller("ItemsController", function($scope,supersonic){
 			success:function(result){
 				result.addUnique("offeredItems",fromMylist);
 				result.save();
-				alert("add successfully");
+				var options = {
+					  message: "Your offer to Trade has been sent",
+					  buttonLabel: "Close"
+					};
+
+					supersonic.ui.dialog.alert("Success!", options).then(function() {
+					  supersonic.logger.log("Alert closed.");
+					});
 			}
 		});
 	}

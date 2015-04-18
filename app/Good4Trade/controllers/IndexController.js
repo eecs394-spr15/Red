@@ -6,20 +6,23 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 //logging in user, for testing
 
 	Parse.User.logIn("liam", "password").then(function(user) {
-		alert("logged in as " + user.get("username"));					    	
+		//alert("logged in as " + user.get("username"));					    	
 	});
 
+//GLOBAL CURRENT USER VARIABLE
+
+	var currentUser = Parse.User.current();
 
 //initializing items
 	var ItemForSale = Parse.Object.extend("ItemForSale");
 
 
-//ALL ITEMS EXCEPT LOGGED IN USER
+//ALL ITEMS EXCEPT LOGGED IN USER'S
 	var query = new Parse.Query(ItemForSale);
 	$scope.items = [];
 	query.descending("createdAt");
-	var currentUserForLoad = Parse.User.current();
-	query.notEqualTo("userID", currentUserForLoad.id);
+	
+	query.notEqualTo("userID", currentUser.id);
 	// query.limit(10);
 
 	query.find().then(function(mItem){
@@ -30,33 +33,41 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 	});
 
 
-//Add item controller functions
+//Add item controller functions ////////////////////////////////////////////////////////////////////////
 	$scope.addItem =function(){
 		var itemForSale = new ItemForSale();
 		itemForSale.set("title", $scope.newItem.title);
 		itemForSale.set("description", $scope.newItem.description);
-		itemForSale.set("userID", "7818012486"); 
+		itemForSale.set("userID", currentUser.id); 
 		itemForSale.set("wishList", $scope.newItem.wishlist);
 		itemForSale.set("offeredItems", []);
 		var parseFile = new Parse.File($scope.newItem.title + ".jpg", {base64:$scope.imageData});
 		itemForSale.set("picture", parseFile);
-		itemForSale.set("offeredItems","[]");
 		itemForSale.save().then(function(itemForSale) {
-				updateUserArray(itemForSale)
+				updateUserArray(itemForSale);
+				var options = {
+					  message: "Item has been added to your account",
+					  buttonLabel: "Close"
+					};
+
+					supersonic.ui.dialog.alert("Success!", options).then(function() {
+					  supersonic.logger.log("Alert closed.");
+					});
+
 				}, function(error) {
+					alert("item save failed");
 				// the save failed.
 				});
 		//supersonic.ui.modal.hide();
 	};
 
 	function updateUserArray(itemForSale){
-			var currentUser = Parse.User.current();
 			if (currentUser) {
 				//currentUser.set("username", "YAYNEW");  
 				currentUser.add("myItems", itemForSale.id);
 				currentUser.save(null, {
 					success: function(user) {
-						alert("successfully changed info");
+						//alert("successfully changed info");
 						updateMyItems();
 					}
 				});
@@ -96,7 +107,12 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 		alert('Failed because: ' + message);
 	}
 
-	// signup and login controller functions
+
+
+
+
+// signup and login controller functions ////////////////////////////////////
+
 	$scope.signUp = function(){
 			var user = new Parse.User();
 			user.set("username", $scope.newUser.username);
@@ -134,13 +150,12 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 
 
 
-// MyItem Controller functions (The list when you want to Offer a trade)
+// MyItem Controller functions (The list when you want to Offer a trade) - linked to items.html////////////////////////////////////
 
 
 	var query2 = new Parse.Query(ItemForSale);
 
 	$scope.myitems = [];
-	var currentUser = Parse.User.current();
 	if(currentUser){
 		var myArrayOfItems = currentUser.get("myItems");
 		query2.containedIn("objectId", myArrayOfItems);
@@ -158,6 +173,8 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 	function updateMyItems(){
 
 	}
+
+
 
 
 //Offered items controller functions (looking at what others have offered you)
@@ -259,41 +276,35 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 
 	$scope.matchedItemList = [];
 
-	//var queryUserWithMatchedItems = new Parse.Query(Parse.User);
+
 	var queryMatchedItems = new Parse.Query(ItemForSale);
-	//var matchedListUser = Parse.User.current(); //what we would actually do. and then set myItemArray
 
-
-  		//alert("successfully logged in automatically" + user.id);
-  		var loggedInUser = Parse.User.current();
-	  	var myItemArray = loggedInUser.get("myItems"); //returns array of my IDs of offered items
-	  	//alert(myItemArray[0]);
-	  	//queryMatchedItems.include("matchedItem");
-		queryMatchedItems.containedIn("objectId", myItemArray); //returns all my items
-		queryMatchedItems.exists("matchedItemID"); //returns all my items with Matched Item IDs set
+  	var myItemArray = currentUser.get("myItems"); //returns array of my IDs of offered items
+	queryMatchedItems.containedIn("objectId", myItemArray); //returns all my items
+	queryMatchedItems.exists("matchedItemID"); //returns all my items with Matched Item IDs set
 		
 
-		queryMatchedItems.find().then(function(results){
+	queryMatchedItems.find().then(function(results){
 
-			for(var i = 0; i < results.length; i++){
-	      			var myItem = results[i];
-	      			var relation = myItem.relation("matchedItem");
-	      			var matchedItem= {};
-	      			relation.query().find().then(function(matchResult){
+		for(var i = 0; i < results.length; i++){
+      			var myItem = results[i];
+      			var relation = myItem.relation("matchedItem");
+      			var matchedItem= {};
+      			relation.query().find().then(function(matchResult){
 
-					    matchedItem= matchResult[0];
-					    //alert("successful fetch" + matchedItem.id);
-					    $scope.matchedItemList.push({ 	myItemTitle:myItem.get("title"), 
-  											myItemDescription:myItem.get("description"), 
-    										myItemPicture:myItem.get("picture").url(), 
-    										matchedItemTitle : matchedItem.get("title"), 
-    										matchedItemDescription:matchedItem.get("description"), 
-    										matchedItemPicture: matchedItem.get("picture").url()
-    									});	
-					 //alert($scope.matchedItemList[1].myItemTitle);
-					});		
-	    	}
-		});
+				    matchedItem= matchResult[0];
+				    //alert("successful fetch" + matchedItem.id);
+				    $scope.matchedItemList.push({ 	myItemTitle:myItem.get("title"), 
+											myItemDescription:myItem.get("description"), 
+										myItemPicture:myItem.get("picture").url(), 
+										matchedItemTitle : matchedItem.get("title"), 
+										matchedItemDescription:matchedItem.get("description"), 
+										matchedItemPicture: matchedItem.get("picture").url()
+									});	
+				 //alert($scope.matchedItemList[1].myItemTitle);
+				});		
+    	}
+	});
 
 
 

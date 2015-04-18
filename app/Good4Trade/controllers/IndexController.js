@@ -2,17 +2,26 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 
 //INITIALIZING
 	Parse.initialize("eQLx1O6y08roi9FxLvTY5lOLdFeZ3NtmHO0tTNQF", "0fJ1VZtzTJS2d2FC4U4DxUscRYGF6Ix5Jg60W5rn");
-	//initializing items
+
+//logging in user, for testing
+
+	Parse.User.logIn("liam", "password").then(function(user) {
+		alert("logged in as " + user.get("username"));					    	
+	});
+
+
+//initializing items
 	var ItemForSale = Parse.Object.extend("ItemForSale");
+
+
+//ALL ITEMS EXCEPT LOGGED IN USER
 	var query = new Parse.Query(ItemForSale);
-
 	$scope.items = [];
-
 	query.descending("createdAt");
+	var currentUserForLoad = Parse.User.current();
+	query.notEqualTo("userID", currentUserForLoad.id);
 	// query.limit(10);
 
-
-//ALL ITEMS
 	query.find().then(function(mItem){
 		for (var i = 0; i < mItem.length;i++){
 		iItem = mItem[i];
@@ -128,21 +137,21 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 // MyItem Controller functions (The list when you want to Offer a trade)
 
 
-	var queryMyItemsToOffer = new Parse.Query(ItemForSale);
+	var query2 = new Parse.Query(ItemForSale);
 
 	$scope.myitems = [];
 	var currentUser = Parse.User.current();
 	if(currentUser){
 		var myArrayOfItems = currentUser.get("myItems");
-		queryMyItemsToOffer.containedIn("objectId", myArrayOfItems);
-		queryMyItemsToOffer.find().then(function(results){
+		query2.containedIn("objectId", myArrayOfItems);
+		query2.find().then(function(results){
 				for(var i = 0; i < results.length; i++){
 				iItem = results[i];
 				$scope.myitems.push({id:iItem.id, url:iItem.get("url"), title:iItem.get("title"), description:iItem.get("description"),offeredItemsLength: iItem.get("offeredItems").length, 
 					picture:iItem.get("picture").url(), myItem: iItem
 					});
 				}
-				});
+		});
 	}
 
 
@@ -202,12 +211,13 @@ g4tapp.controller("IndexController", function($scope,supersonic){
       			$scope.offeredItems.push({title:offeredItem.get("title"), description:offeredItem.get("description"), 
         			picture:offeredItem.get("picture").url(), offeredItem : offeredItem, myItem:myItem});
     			}
-    		//do redirect;
+    		//DEBUGGING, Proof that it's added to the scope, but that the view is not updated
     		//alert($scope.offeredItems[2].offeredItem.get("title"));
-    		$scope.offeredItems[2].offeredItem.set("title", "newestJab");
-    		$scope.offeredItems[2].offeredItem.save();
+    		//$scope.offeredItems[2].offeredItem.set("title", "newestJab");
+    		//$scope.offeredItems[2].offeredItem.save();
+
+    		//do redirect;
     		var offeredView = new supersonic.ui.View("Good4Trade#offered");
-    		
 			supersonic.ui.layers.push(offeredView);
 		});
 			
@@ -253,37 +263,38 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 	var queryMatchedItems = new Parse.Query(ItemForSale);
 	//var matchedListUser = Parse.User.current(); //what we would actually do. and then set myItemArray
 
-	Parse.User.logIn("liam", "password").then(function(user) {
-		  		//alert("successfully logged in automatically" + user.id);
-			  	var myItemArray = user.get("myItems"); //returns array of my IDs of offered items
-			  	//alert(myItemArray[0]);
-			  	//queryMatchedItems.include("matchedItem");
-				queryMatchedItems.containedIn("objectId", myItemArray); //returns all my items
-				queryMatchedItems.exists("matchedItemID"); //returns all my items with Matched Item IDs set
-				
 
-				queryMatchedItems.find().then(function(results){
+  		//alert("successfully logged in automatically" + user.id);
+  		var loggedInUser = Parse.User.current();
+	  	var myItemArray = loggedInUser.get("myItems"); //returns array of my IDs of offered items
+	  	//alert(myItemArray[0]);
+	  	//queryMatchedItems.include("matchedItem");
+		queryMatchedItems.containedIn("objectId", myItemArray); //returns all my items
+		queryMatchedItems.exists("matchedItemID"); //returns all my items with Matched Item IDs set
+		
 
-					for(var i = 0; i < results.length; i++){
-			      			var myItem = results[i];
-			      			var relation = myItem.relation("matchedItem");
-			      			var matchedItem= {};
-			      			relation.query().find().then(function(matchResult){
+		queryMatchedItems.find().then(function(results){
 
-							    matchedItem= matchResult[0];
-							    //alert("successful fetch" + matchedItem.id);
-							    $scope.matchedItemList.push({ 	myItemTitle:myItem.get("title"), 
-	      											myItemDescription:myItem.get("description"), 
-	        										myItemPicture:myItem.get("picture").url(), 
-	        										matchedItemTitle : matchedItem.get("title"), 
-	        										matchedItemDescription:matchedItem.get("description"), 
-	        										matchedItemPicture: matchedItem.get("picture").url()
-	        									});	
-							 //alert($scope.matchedItemList[1].myItemTitle);
-							});		
-			    	}
-				});		    	
-	});
+			for(var i = 0; i < results.length; i++){
+	      			var myItem = results[i];
+	      			var relation = myItem.relation("matchedItem");
+	      			var matchedItem= {};
+	      			relation.query().find().then(function(matchResult){
+
+					    matchedItem= matchResult[0];
+					    //alert("successful fetch" + matchedItem.id);
+					    $scope.matchedItemList.push({ 	myItemTitle:myItem.get("title"), 
+  											myItemDescription:myItem.get("description"), 
+    										myItemPicture:myItem.get("picture").url(), 
+    										matchedItemTitle : matchedItem.get("title"), 
+    										matchedItemDescription:matchedItem.get("description"), 
+    										matchedItemPicture: matchedItem.get("picture").url()
+    									});	
+					 //alert($scope.matchedItemList[1].myItemTitle);
+					});		
+	    	}
+		});
+
 
 
 

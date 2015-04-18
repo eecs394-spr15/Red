@@ -26,15 +26,19 @@ g4tapp.controller("ItemsController", function($scope,supersonic){
 	var query2 = new Parse.Query(ItemForSale);
 
 	$scope.myitems = [];
-	  // TO DO
-	     query2.equalTo("userID", "7818012486");
-	     query2.find().then(function(results){
-	        for(var i = 0; i < results.length; i++){
-	          iItem = results[i];
-	          $scope.myitems.push({id:iItem.id, url:iItem.get("url"), title:iItem.get("title"), description:iItem.get("description"), 
-	            picture:iItem.get("picture").url(), offeredItemsLength: iItem.get("offeredItems").length});
-	        }
-	      });
+	var currentUser = Parse.User.current();
+	if(currentUser){
+		var myArrayOfItems = currentUser.get("myItems");
+		query2.containedIn("objectId", myArrayOfItems);
+		query2.find().then(function(results){
+				for(var i = 0; i < results.length; i++){
+				iItem = results[i];
+				$scope.myitems.push({id:iItem.id, url:iItem.get("url"), title:iItem.get("title"), description:iItem.get("description"),offeredItemsLength: iItem.get("offeredItems").length, 
+					picture:iItem.get("picture").url(), myItem: iItem
+					});
+				}
+		});
+	}
 
 
 	var query3 = new Parse.Query(ItemForSale);

@@ -1,206 +1,291 @@
 g4tapp.controller("IndexController", function($scope,supersonic){
-		// Index controller functions
-		Parse.initialize("eQLx1O6y08roi9FxLvTY5lOLdFeZ3NtmHO0tTNQF", "0fJ1VZtzTJS2d2FC4U4DxUscRYGF6Ix5Jg60W5rn");
-		//initializing items
-		var ItemForSale = Parse.Object.extend("ItemForSale");
-		var query = new Parse.Query(ItemForSale);
 
-		$scope.items = [];
+//INITIALIZING
+	Parse.initialize("eQLx1O6y08roi9FxLvTY5lOLdFeZ3NtmHO0tTNQF", "0fJ1VZtzTJS2d2FC4U4DxUscRYGF6Ix5Jg60W5rn");
+	//initializing items
+	var ItemForSale = Parse.Object.extend("ItemForSale");
+	var query = new Parse.Query(ItemForSale);
 
-		query.descending("createdAt");
-		// query.limit(10);
+	$scope.items = [];
 
-		query.find().then(function(mItem){
-			for (var i = 0; i < mItem.length;i++){
-			iItem = mItem[i];
-			$scope.items.push({id:iItem.id, url:iItem.get("url"),title:iItem.get("title"),description:iItem.get("description"), picture:iItem.get("picture").url()});
-			}
-			});
+	query.descending("createdAt");
+	// query.limit(10);
 
-		//add item controller functions
-		$scope.addItem =function(){
-			var itemForSale = new ItemForSale();
-			itemForSale.set("title", $scope.newItem.title);
-			itemForSale.set("description", $scope.newItem.description);
-			itemForSale.set("userID", "7818012486"); 
-			itemForSale.set("wishList", $scope.newItem.wishlist);
-			itemForSale.set("offeredItems", []);
-			var parseFile = new Parse.File($scope.newItem.title + ".jpg", {base64:$scope.imageData});
-			itemForSale.set("picture", parseFile);
-			itemForSale.set("offeredItems","[]");
-			itemForSale.save().then(function(itemForSale) {
-					updateUserArray(itemForSale)
-					}, function(error) {
-					// the save failed.
-					});
-			//supersonic.ui.modal.hide();
-		};
 
-		function updateUserArray(itemForSale){
+//ALL ITEMS
+	query.find().then(function(mItem){
+		for (var i = 0; i < mItem.length;i++){
+		iItem = mItem[i];
+		$scope.items.push({id:iItem.id, url:iItem.get("url"),title:iItem.get("title"),description:iItem.get("description"), picture:iItem.get("picture").url()});
+		}
+	});
+
+
+//Add item controller functions
+	$scope.addItem =function(){
+		var itemForSale = new ItemForSale();
+		itemForSale.set("title", $scope.newItem.title);
+		itemForSale.set("description", $scope.newItem.description);
+		itemForSale.set("userID", "7818012486"); 
+		itemForSale.set("wishList", $scope.newItem.wishlist);
+		itemForSale.set("offeredItems", []);
+		var parseFile = new Parse.File($scope.newItem.title + ".jpg", {base64:$scope.imageData});
+		itemForSale.set("picture", parseFile);
+		itemForSale.set("offeredItems","[]");
+		itemForSale.save().then(function(itemForSale) {
+				updateUserArray(itemForSale)
+				}, function(error) {
+				// the save failed.
+				});
+		//supersonic.ui.modal.hide();
+	};
+
+	function updateUserArray(itemForSale){
 			var currentUser = Parse.User.current();
 			if (currentUser) {
 				//currentUser.set("username", "YAYNEW");  
 				currentUser.add("myItems", itemForSale.id);
 				currentUser.save(null, {
-success: function(user) {
-alert("successfully changed info");
-updateMyItems();
-}
-});
-} else {
-	alert('phail');
-}
-}
-
-$scope.cancel = function(){
-	supersonic.ui.modal.hide();
-};
-
-var options = {
-quality: 50,
-	 allowEdit: true,
-	 targetWidth: 400,
-	 targetHeight: 500,
-	 //encodingType: "png",
-	 saveToPhotoAlbum: false,
-	 destinationType: "dataURL"
-};
-
-$scope.getPicture = function(){	
-	navigator.camera.getPicture(onSuccess, onFail, options);	
-	/*supersonic.media.camera.takePicture(options).then( function(result){
-	  $scope.imageData= "data:image/jpeg;base64, " + result;
-	  }); */
-}
-
-function onSuccess(imageData) {
-	var image = document.getElementById('myImage');
-	image.src = "data:image/png;base64," + imageData;
-	$scope.imageData = imageData;  
-}
-
-function onFail(message) {
-	alert('Failed because: ' + message);
-}
-
-// signup and login controller functions
-$scope.signUp = function(){
-	var user = new Parse.User();
-	user.set("username", $scope.newUser.username);
-	user.set("password", $scope.newUser.password);
-	user.set("email", $scope.newUser.email);
-	user.set("phone",  $scope.newUser.phone);
-	user.signUp(null, {
-success: function(user) {
-supersonic.ui.initialView.dismiss();
-alert("success");
-},
-error: function(user, error) {
-// Show the error message somewhere and let the user try again.
-alert("Error: " + error.code + " " + error.message);
-}
-});
-}
-$scope.dismissInit = function(){
-	supersonic.ui.initialView.dismiss();
-}
-$scope.logIn = function(){
-	var user = Parse.User.logIn($scope.existingUser.username, 
-			$scope.existingUser.password, {
-success: function(user) {
-//   user.set("username", "newUsername");  // attempt to change username
-user.save(null, {
-success: function(user) {
-alert("successfully logged in");
-supersonic.ui.initialView.dismiss();
-// This succeeds, since the user was authenticated on the device
-}
-});
-}
-});
-}
-
-
-
-
-// MyItem Controller functions
-var query2 = new Parse.Query(ItemForSale);
-
-$scope.myitems = [];
-var currentUser = Parse.User.current();
-if(currentUser){
-	query2.equalTo("userID", currentUser.id);
-	query2.find().then(function(results){
-			for(var i = 0; i < results.length; i++){
-			iItem = results[i];
-			$scope.myitems.push({id:iItem.id, url:iItem.get("url"), title:iItem.get("title"), description:iItem.get("description"),offeredItemsLength: iItem.get("offeredItems").length, 
-				picture:iItem.get("picture").url()
+					success: function(user) {
+						alert("successfully changed info");
+						updateMyItems();
+					}
 				});
+			} else {
+				alert('could not add new Item to User Array');
 			}
+		}
+
+	$scope.cancel = function(){
+		supersonic.ui.modal.hide();
+	};
+
+	var options = {
+	quality: 50,
+		 allowEdit: true,
+		 targetWidth: 400,
+		 targetHeight: 500,
+		 //encodingType: "png",
+		 saveToPhotoAlbum: false,
+		 destinationType: "dataURL"
+	};
+
+	$scope.getPicture = function(){	
+		navigator.camera.getPicture(onSuccess, onFail, options);	
+		/*supersonic.media.camera.takePicture(options).then( function(result){
+		  $scope.imageData= "data:image/jpeg;base64, " + result;
+		  }); */
+	}
+
+	function onSuccess(imageData) {
+		var image = document.getElementById('myImage');
+		image.src = "data:image/png;base64," + imageData;
+		$scope.imageData = imageData;  
+	}
+
+	function onFail(message) {
+		alert('Failed because: ' + message);
+	}
+
+	// signup and login controller functions
+	$scope.signUp = function(){
+			var user = new Parse.User();
+			user.set("username", $scope.newUser.username);
+			user.set("password", $scope.newUser.password);
+			user.set("email", $scope.newUser.email);
+			user.set("phone",  $scope.newUser.phone);
+			user.signUp(null, {
+			success: function(user) {
+				supersonic.ui.initialView.dismiss();
+				alert("success");
+			},
+			error: function(user, error) {
+				// Show the error message somewhere and let the user try again.
+				alert("Error: " + error.code + " " + error.message);
+			}
+		});
+	}
+
+	$scope.dismissInit = function(){
+		supersonic.ui.initialView.dismiss();
+	}
+
+	$scope.logIn = function(){
+		Parse.User.logIn($scope.existingUser.username, $scope.existingUser.password, {
+				success: function(user) {
+					user.save(null, {
+						success: function(user) {
+						alert("successfully logged in");
+						supersonic.ui.initialView.dismiss();
+						}
+					});
+				}
 			});
-}
-function updateMyItems(){
-
-}
+	}
 
 
-//Offered items controller function
 
-	var queryOffered1 = new Parse.Query(ItemForSale);
-    var queryOffered2 = new Parse.Query(ItemForSale);
-//	var currentItem = Parse.ItemForSale.current();
-		$scope.offereditems = [];
-	  // TO DO
-
-	  	queryOffered1.equalTo("title", "Coke");
-
-	    queryOffered1.find().then(function(myself){
-   			ItemsArray = myself[0].get("offeredItems");
-   			//thisitem = myself[0];
-   			//$scope.offereditems.push({url:thisitem.get("url"),title:thisitem.get("title"),description:thisitem.get("description"), picture:thisitem.get("picture").url()});
-   			
-
-   			for (var i = 0; i <ItemsArray.length; i++){
-
-       		queryOffered2.equalTo("objectId", ItemsArray[i]);
-  			queryOffered2.find().then(function(Item){
-  				thatitem=Item[0];
-				$scope.offereditems.push({url:thatitem.get("url"),title:thatitem.get("title"),description:thatitem.get("description"), picture:thatitem.get("picture").url()});
-  			});
-  		}
-  		
-
-   		});
-/*
-	$scope.passTitle = function(){
-		$scope.myitemTitle = "Coke";
-	}	    
-
-*/
+// MyItem Controller functions (The list when you want to Offer a trade)
 
 
-//controller from ItemsController.js
-var contactInfo = {
-message: "\n\n Contact Liam at:\n (781)-801-24822",
-	 buttonLabel: "Close"
-};
+	var queryMyItemsToOffer = new Parse.Query(ItemForSale);
+
+	$scope.myitems = [];
+	var currentUser = Parse.User.current();
+	if(currentUser){
+		var myArrayOfItems = currentUser.get("myItems");
+		queryMyItemsToOffer.containedIn("objectId", myArrayOfItems);
+		queryMyItemsToOffer.find().then(function(results){
+				for(var i = 0; i < results.length; i++){
+				iItem = results[i];
+				$scope.myitems.push({id:iItem.id, url:iItem.get("url"), title:iItem.get("title"), description:iItem.get("description"),offeredItemsLength: iItem.get("offeredItems").length, 
+					picture:iItem.get("picture").url(), myItem: iItem
+					});
+				}
+				});
+	}
 
 
-$scope.showMatch = function(){
-	supersonic.ui.modal.hide();
-	supersonic.ui.dialog.alert("You Have a Match!!", contactInfo).then(function() {
+	function updateMyItems(){
+
+	}
+
+
+//Offered items controller functions (looking at what others have offered you)
+	var queryOfferedItems = new Parse.Query(ItemForSale);
+
+	$scope.offeredItems =[{title:"Coke1", description:"bottle", 
+	        			picture:"http://files.parsetfss.com/19767582-8750-471b-bb21-4c631806f686/tfss-fb31a440-e615-47d4-862a-2c424c2de6b2-Coke.jpg", offeredItem : {}, myItem: {}}];
+
+
+	//FOR DEBUGGING VARS, DELETE LATER
+	var queryMyItemDebug = new Parse.Query(ItemForSale);
+	var queryOfferedDebug = new Parse.Query(ItemForSale);
+
+
+	queryMyItemDebug.get("ShGzNlU5q4", {
+			  success: function(myItem) {
+			    $scope.offeredItems[0].myItem = myItem;
+			  },
+			  error: function(object, error) {
+			    alert("get item failed");
+			  }
+		});
+
+	queryOfferedDebug.get("XGlAQQGLND", {
+			  success: function(offeredItem) {
+			    $scope.offeredItems[0].offeredItem = offeredItem;
+			  },
+			  error: function(object, error) {
+			    alert("get item failed");
+			  }
+		});
+
+	//END FOR DEBUGGING VARS
+	
+
+	$scope.$watch('offeredItems', function(newVal, oldVal) {
+    	//alert($scope.offeredItems[0].title);
+	});        			
+
+	$scope.displayOffers = function(myItem){
+		//$scope.offeredItems = []; //for resetting the scope
+
+		var offeredItemArray = myItem.get("offeredItems"); //returns array of object IDs of offered items
+
+		queryOfferedItems.containedIn("objectId", offeredItemArray); //constraining query
+
+		queryOfferedItems.find().then(function(queryOfferedItemResults){
+			for(var i = 0; i < queryOfferedItemResults.length; i++){
+      			var offeredItem = queryOfferedItemResults[i];
+      			//alert(offeredItem.get("title"));
+      			$scope.offeredItems.push({title:offeredItem.get("title"), description:offeredItem.get("description"), 
+        			picture:offeredItem.get("picture").url(), offeredItem : offeredItem, myItem:myItem});
+    			}
+    		//do redirect;
+    		//alert($scope.offeredItems[2].offeredItem.get("title"));
+    		$scope.offeredItems[2].offeredItem.set("title", "newestJab");
+    		$scope.offeredItems[2].offeredItem.save();
+    		var offeredView = new supersonic.ui.View("Good4Trade#offered");
+    		
+			supersonic.ui.layers.push(offeredView);
+		});
+			
+	}
+
+
+
+
+
+//MATCHED ITEM CONTROLLER
+	//PART 1: Update matched item field in database
+
+	$scope.acceptItem = function(myItem,offeredItem){
+
+		var contactInfo = {
+			message: "\n\n Contact Liam at:\n (781)-801-24822",
+	 		buttonLabel: "Close"
+		};
+
+		supersonic.ui.dialog.alert("Successfully Traded!", contactInfo).then(function() {
 			supersonic.logger.log("Alert closed.");
-			//supersonic.ui.modal.hide();
+			supersonic.ui.modal.hide();
 			});
-}
 
-$scope.tradeSuccess = function(){
-	supersonic.ui.modal.hide();
-	supersonic.ui.dialog.alert("Successfully Trade!", contactInfo).then(function() {
-			supersonic.logger.log("Alert closed.");
-			//supersonic.ui.modal.hide();
-			});
-}
+		myItem.set("matchedItemID", offeredItem.id);
+		offeredItem.set("matchedItemID", myItem.id);
+
+		var myItemRelation = myItem.relation("matchedItem");
+		myItemRelation.add(offeredItem);
+		var offeredItemRelation = offeredItem.relation("matchedItem");
+		offeredItemRelation.add(myItem);
+
+		offeredItem.save();		
+		myItem.save();
+	}
+
+
+	//part 2 : add matched item to matched item list
+
+	$scope.matchedItemList = [];
+
+	//var queryUserWithMatchedItems = new Parse.Query(Parse.User);
+	var queryMatchedItems = new Parse.Query(ItemForSale);
+	//var matchedListUser = Parse.User.current(); //what we would actually do. and then set myItemArray
+
+	Parse.User.logIn("liam", "password").then(function(user) {
+		  		//alert("successfully logged in automatically" + user.id);
+			  	var myItemArray = user.get("myItems"); //returns array of my IDs of offered items
+			  	//alert(myItemArray[0]);
+			  	//queryMatchedItems.include("matchedItem");
+				queryMatchedItems.containedIn("objectId", myItemArray); //returns all my items
+				queryMatchedItems.exists("matchedItemID"); //returns all my items with Matched Item IDs set
+				
+
+				queryMatchedItems.find().then(function(results){
+
+					for(var i = 0; i < results.length; i++){
+			      			var myItem = results[i];
+			      			var relation = myItem.relation("matchedItem");
+			      			var matchedItem= {};
+			      			relation.query().find().then(function(matchResult){
+
+							    matchedItem= matchResult[0];
+							    //alert("successful fetch" + matchedItem.id);
+							    $scope.matchedItemList.push({ 	myItemTitle:myItem.get("title"), 
+	      											myItemDescription:myItem.get("description"), 
+	        										myItemPicture:myItem.get("picture").url(), 
+	        										matchedItemTitle : matchedItem.get("title"), 
+	        										matchedItemDescription:matchedItem.get("description"), 
+	        										matchedItemPicture: matchedItem.get("picture").url()
+	        									});	
+							 //alert($scope.matchedItemList[1].myItemTitle);
+							});		
+			    	}
+				});		    	
+	});
+
+
 
 });
 

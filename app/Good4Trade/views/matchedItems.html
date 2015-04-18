@@ -1,0 +1,34 @@
+<div ng-controller="IndexController">
+    <super-navbar>
+      <super-navbar-title>
+        Matched Items
+      </super-navbar-title>
+      <super-navbar-button class="item-icon-right" side="right" location="Good4Trade#addItem">
+        <h3> Add </h3> 
+      </super-navbar-button>
+    </super-navbar>
+
+    
+    <a ng-repeat="mitem in matchedItemList" class="list card" href="#">
+
+
+	  <div class="item item-avatar">
+	    <img src={{mitem.myItemPicture}}>
+	    <h2>{{mitem.myItemTitle}}</h2>
+	    <p>{{mitem.myItemDescription}}</p>
+	  </div>
+
+	  <div class="item item-image">
+	    <img src= {{mitem.matchedItemPicture}}>
+	  </div>
+
+	  <a class="item item-icon-left assertive" href="#">
+	    <i class="icon ion-music-note"></i>
+	    Trade Completed
+	  </a>
+
+
+      </a>
+
+
+</div>

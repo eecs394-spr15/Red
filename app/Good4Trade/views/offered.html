@@ -1,31 +1,33 @@
 <div ng-controller="IndexController">
-    <super-navbar>
-      <super-navbar-button ng-click="cancel()">
-        Cancel
-      </super-navbar-button>
+  <super-navbar>
       <super-navbar-title>
         Offered Items
       </super-navbar-title>
+  </super-navbar>
+  <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
+  <div ng-hide="showSpinner">
 
-    </super-navbar>
 
-    <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
-    <div ng-hide="showSpinner">
 
-    <a ng-repeat="oitem in offereditems" class="item item-thumbnail-left item-button-right" href="#">
-    <img   src= {{oitem.picture}}>
+    <a ng-repeat="oitem in offeredItems" class="item item-thumbnail-left item-button-right" href="#">
+
+        <img src= {{oitem.picture}}>
   
         <h2 > {{oitem.title}}</h2>
-        <p > {{oitem.description}}</p>
+        <p style="white-space: normal; width: 12em"> {{oitem.description}}</p>
         <div class="buttons">
           <div class="col col-center padding-top">
-            <super-modal-show location="Good4Trade#myitems">
-              <button class="button button-large button-outline button-balanced" ng-click="tradeSuccess()">
-                Trade
-              </button>
-            </super-modal-show>
+
+            <super-modal-hide>
+                <button class="button button-large button-outline button-positive" ng-click="acceptItem(oitem.myItem, oitem.offeredItem)">
+                    Accept
+                </button>
+            </super-modal-hide>
+
           </div>
         </div>
-      </a>
 
+    </a>
+
+    </div>
 </div>

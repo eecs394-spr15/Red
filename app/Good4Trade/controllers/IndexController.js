@@ -16,6 +16,8 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 //initializing items
 	var ItemForSale = Parse.Object.extend("ItemForSale");
 
+//search filter variable
+	$scope.keyword = "";
 
 //ALL ITEMS EXCEPT LOGGED IN USER'S
 	var query = new Parse.Query(ItemForSale);

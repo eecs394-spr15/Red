@@ -18,7 +18,14 @@
   <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
   <div ng-hide="showSpinner">
 
-    <a ng-repeat="mitem in items" class="item item-thumbnail-left item-button-right" href="#">
+  <div class="list list-inset">
+    <label class="item item-input">
+      <i class="icon super-search placeholder-icon"></i>
+      <input type="text" placeholder="Search" ng-model="keyword">
+    </label>
+  </div>  
+
+    <a ng-repeat="mitem in items|filter:keyword" class="item item-thumbnail-left item-button-right" href="#">
     	<img src= {{mitem.picture}}>
       <h2>{{mitem.title}}</h2>
       <p style="white-space: normal; width: 12em">{{mitem.description}}</p>

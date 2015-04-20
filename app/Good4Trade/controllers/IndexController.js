@@ -142,7 +142,7 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 				success: function(user) {
 					user.save(null, {
 						success: function(user) {
-						alert("successfully logged in");
+						supersonic.ui.dialog.alert("successfully logged in");
 						supersonic.ui.initialView.dismiss();
 						}
 					});

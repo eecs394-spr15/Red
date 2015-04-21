@@ -5,9 +5,9 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 
 //logging in user, for testing
 
-	Parse.User.logIn("liam", "password").then(function(user) {
+	//Parse.User.logIn("liam", "password").then(function(user) {
 		//alert("logged in as " + user.get("username"));					    	
-	});
+	//});
 
 //GLOBAL CURRENT USER VARIABLE
 
@@ -149,6 +149,42 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 				}
 			});
 	}
+
+
+	$scope.editThisUser = function(){
+		var queryEditUser = new Parse.Query(Parse.User);
+        queryEditUser.get(currentUser.id, {
+          success: function(userAgain) {
+            userAgain.set("username", $scope.editUser.username);
+            userAgain.set("password", $scope.editUser.password);
+			userAgain.set("email", $scope.editUser.email);
+			userAgain.set("phone",  $scope.editUser.phone);
+			currentUser = Parse.User.current();
+			$scope.thisUser.push({ 	userName: currentUser.get("username"), 
+									Email: currentUser.get("email"), 
+									Phone: currentUser.get("phone"),
+									thispassword: currentUser.get("password")
+								});
+			$scope.thisuser = $scope.thisUser[0];
+			alert(" Successfully updated your profile! "+ userAgain.get("username"));
+            userAgain.save(null, {
+              error: function(userAgain, error) {
+                // This will error, since the Parse.User is not authenticated
+              }
+            });
+            }
+        });
+	}
+
+
+		$scope.thisUser = [];
+
+			$scope.thisUser.push({ 	userName: currentUser.get("username"), 
+									Email: currentUser.get("email"), 
+									Phone: currentUser.get("phone"),
+									thispassword: currentUser.get("password")
+								});
+	$scope.thisuser = $scope.thisUser[0];
 
 
 

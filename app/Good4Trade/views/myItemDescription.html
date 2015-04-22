@@ -1,0 +1,33 @@
+<div ng-controller="DescriptionController">
+	<super-navbar>
+    	<super-navbar-title>
+			Description
+    	</super-navbar-title>
+    <super-navbar-button class="item-icon-right" side="right" location="Good4Trade#addItem">
+    	Add
+    </super-navbar-button>
+  	</super-navbar>
+  	
+  	<div class="item item-image">
+  		<img src={{iPicture}} />
+  	</div>
+  	
+  	<label class="item item-input item-stacked-label">
+    	<span class="input-label">Title</span>
+    	<input type="text" ng-model="thisItem.title" placeholder="{{iTitle}}"/>
+    </label>
+
+  	<label class="item item-input item-stacked-label">
+    	<span class="input-label">Description</span>
+    	<input type="text" ng-model="thisItem.description" placeholder="{{iDescription}}"/>
+    </label>
+    
+  	<label class="item item-input item-stacked-label">
+    	<span class="input-label">What I want for it...</span>
+    	<input type="text" ng-model="thisItem.wishList" placeholder="{{iWishList}}"/>
+    </label>
+  	
+  	<button ng-click="editThisItem()" class="button button-block button-calm">Save</button>
+  	
+</div>
+  	

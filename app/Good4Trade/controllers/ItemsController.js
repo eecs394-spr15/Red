@@ -15,6 +15,10 @@ g4tapp.controller("ItemsController", function($scope,supersonic){
 	$scope.cancel = function(){
 		supersonic.ui.modal.hide();
 	}
+	
+	$scope.refresh = function(){
+		location.reload();
+	}
 
 	$scope.showMatch = function(){
 		supersonic.ui.dialog.alert("You Have a Match!!", options).then(function() {

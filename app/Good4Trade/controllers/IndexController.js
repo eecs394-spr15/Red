@@ -246,7 +246,8 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 			var relation = myItem.relation("matchedItem");
   			var matchedItem= {};
   			relation.query().find().then(function(matchResult){
-			    matchedItem= matchResult[0];
+  				for (var i = 0; i < matchResult.length; i++){
+			    matchedItem = matchResult[i];
 			    $scope.matchedItemList.push({ 	myItemTitle: title, 
 												myItemDescription: description, 
 												myItemPicture: picture, 
@@ -256,8 +257,9 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 												myItemID : myItemID,
 												matchedItemID: matchedItem.id
 											});	
+			}
+			});	
 
-			});		
 		}
 
 // IMPLEMENT LATER: Delete all references when trade is complete

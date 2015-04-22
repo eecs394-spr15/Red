@@ -27,7 +27,7 @@ g4tapp.controller("DescriptionController", function($scope,supersonic){
 	});
 //update the relation in the database upon acceptance
 	$scope.acceptItem = function(myItem,offeredItem){
-			//alert($scope.offeredItems.length);//SCOPE IS NOT UPDATED AT THIS POINT!!, else, run a query on the userID of offered Item, get that person's info
+			
 			var name = "";
 			var phone = "";
 			var email = "";

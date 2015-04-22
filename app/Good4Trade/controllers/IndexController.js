@@ -55,14 +55,14 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 		itemForSale.save().then(function(itemForSale) {
 				updateUserArray(itemForSale);
 				var options = {
-					  message: "Item has been added to your account",
-					  buttonLabel: "Close"
-					};
+				  message: "Item has been added to your account",
+				  buttonLabel: "Close"
+				};
 
-					supersonic.ui.dialog.alert("Success!", options).then(function() {
-					  supersonic.logger.log("Alert closed.");
-					});
-					supersonic.ui.layers.pop();
+				supersonic.ui.dialog.alert("Success!", options).then(function() {
+				  supersonic.logger.log("Alert closed.");
+				});
+				supersonic.ui.layers.pop();
 					
 				}, function(error) {
 					alert("item save failed");
@@ -236,7 +236,6 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 
   	var myItemArray = currentUser.get("myItems"); //returns array of my IDs of offered items
 	queryMatchedItems.containedIn("objectId", myItemArray); //returns all my items
-	//queryMatchedItems.exists("matchedItemID"); //returns all my items with Matched Item IDs set
 		
 
 	queryMatchedItems.find().then(function(results){
@@ -322,10 +321,24 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 		//updating master list
 		myItem.destroy({
 			  success: function(myObject) {
-			    alert("object successfully destroyed");
+			    var options = {
+				  message: "Item has been removed from your account.",
+				  buttonLabel: "Close"
+				};
+
+				supersonic.ui.dialog.alert("Success!", options).then(function() {
+				  supersonic.logger.log("Alert closed.");
+				});
 			  },
 			  error: function(myObject, error) {
-			    alert("failed to remove your item.");
+			    var options = {
+				  message: "Item could not be removed from your account.",
+				  buttonLabel: "Close"
+				};
+
+				supersonic.ui.dialog.alert("Issue Encountered", options).then(function() {
+				  supersonic.logger.log("Alert closed.");
+				});
 			  }
 		});
 
@@ -343,7 +356,14 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 
 
   	$scope.tradeCancelled = function(myItem, matchedItem){
-  		alert("trade cancelled!");
+  		var options = {
+				  message: "The trade has been cancelled.",
+				  buttonLabel: "Close"
+				};
+
+		supersonic.ui.dialog.alert("Success!", options).then(function() {
+		  supersonic.logger.log("Alert closed.");
+		});
 
   		matchedItem.remove("offeredItems", myItem.id);
 		matchedItem.remove("matchedItemIDs", myItem.id);

@@ -43,11 +43,15 @@ g4tapp.controller("ItemsController", function($scope,supersonic){
 
 	var query3 = new Parse.Query(ItemForSale);
 
-	$scope.addToOfferList = function(fromMylist){
+	$scope.addToOfferList = function(myItem){
 		//alert(fromMylist+"offerTo"+$scope.previewId);
 		query3.get($scope.previewId,{
 			success:function(result){
-				result.addUnique("offeredItems",fromMylist);
+				//updating my object
+				myItem.addUnique("offeredTo", result.id);
+				myItem.save();
+				//updating their object
+				result.addUnique("offeredItems",myItem.id);
 				result.save();
 				var options = {
 					  message: "Your offer to Trade has been sent",

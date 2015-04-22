@@ -12,7 +12,7 @@ module.exports =
     }
     {
       title: "My Items"
-      id: "geolocation"
+      id: "bag"
       location: "Good4Trade#myitems" # URLs are supported!
     }
 #    {

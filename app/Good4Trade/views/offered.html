@@ -12,14 +12,14 @@
     		<div class="item item-thumbnail-left item-button-right">
     			<img class="full-image" src={{oitem.picture}}>
     			<h2>{{oitem.title}}</h2>
-    			<p style="white-space: nowrap; width: 12em">{{oitem.description}}</p>
+    			<p style="white-space: nowrap; width: 10em">{{oitem.description}}</p>
       			<div class="buttons">
         			<div class="col col-center padding-top">
-            			<super-modal-hide>
+            			<super-navigate-back>
                 			<button class="button icon-left super-thumbsup button-large button-clear button-calm" ng-click="acceptItem(oitem.myItem, oitem.offeredItem)">
                     			Accept
                 			</button>
-            			</super-modal-hide>
+            			</super-navigate-back>
         			</div>
       			</div>
     		</div>

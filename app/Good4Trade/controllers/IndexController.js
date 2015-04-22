@@ -48,6 +48,8 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 		itemForSale.set("userID", currentUser.id); 
 		itemForSale.set("wishList", $scope.newItem.wishlist);
 		itemForSale.set("offeredItems", []);
+		itemForSale.set("offeredTo",[]);
+		itemForSale.set("matchedItemIDs",[]);
 		var parseFile = new Parse.File($scope.newItem.title + ".jpg", {base64:$scope.imageData});
 		itemForSale.set("picture", parseFile);
 		itemForSale.save().then(function(itemForSale) {
@@ -234,56 +236,132 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 
   	var myItemArray = currentUser.get("myItems"); //returns array of my IDs of offered items
 	queryMatchedItems.containedIn("objectId", myItemArray); //returns all my items
-	queryMatchedItems.exists("matchedItemID"); //returns all my items with Matched Item IDs set
+	//queryMatchedItems.exists("matchedItemID"); //returns all my items with Matched Item IDs set
 		
 
 	queryMatchedItems.find().then(function(results){
-		for(var i = 0; i < results.length; i++){		
-      			var myItem = results[i];
-      			var title = myItem.get("title");
-      			var description = myItem.get("description");
-      			var picture = myItem.get("picture").url();
-      			var myItemID = myItem.id;
-      			asynchCallToUpdateMatchedItems(myItem, title, description, picture, myItemID);
-    	}
+		results.forEach(function(myItem){
+      			if (myItem.get("matchedItemIDs").length >0){
+	      			var title = myItem.get("title");
+	      			var description = myItem.get("description");
+	      			var picture = myItem.get("picture").url();
+	      			var myItemID = myItem.id;
+	      			
+	      			asynchCallToUpdateMatchedItems(myItem, title, description, picture, myItemID);
+      			}
+    	});
 	});
 
 	function asynchCallToUpdateMatchedItems(myItem, title, description, picture, myItemID){
 			var relation = myItem.relation("matchedItem");
-  			var matchedItem= {};
   			  relation.query().find().then(function(matchResult){
-  				for (var i = 0; i < matchResult.length; i++){
-			    matchedItem = matchResult[i];
-			    var queryOwnerOfMatchedItem = new Parse.Query(Parse.User);
-			    queryOwnerOfMatchedItem.get(matchedItem.get("userID"),{
-				success: function(user) {
-				    name = user.get("username");
-				    phone = user.get("phone");
-				    email = user.get("email");
-				    var contactInfo =  "\n\n Contact " + name + " at:\n " + phone + " or at:\n " + email
-			
-			    $scope.matchedItemList.push({ 	myItemTitle: title, 
-												myItemDescription: description, 
-												myItemPicture: picture, 
-												matchedItemTitle : matchedItem.get("title"), 
-												matchedItemDescription:matchedItem.get("description"), 
-												matchedItemContact:contactInfo,
-												matchedItemPicture: matchedItem.get("picture").url(),
-												myItemID : myItemID,
-												matchedItemID: matchedItem.id
-											});	
-			   
-			
-			}
-		});	
-	}
-	});
-  }
-// IMPLEMENT LATER: Delete all references when trade is complete
+  				matchResult.forEach(function(matchedItem){
+				    var queryOwnerOfMatchedItem = new Parse.Query(Parse.User);
+				    queryOwnerOfMatchedItem.get(matchedItem.get("userID"),{
+						success: function(user) {
+						    name = user.get("username");
+						    phone = user.get("phone");
+						    email = user.get("email");
+						    var contactInfo =  "\n\n Contact " + name + " at:\n " + phone + " or at:\n " + email
+					
+					    $scope.matchedItemList.push({ 	myItemTitle: title, 
+														myItemDescription: description, 
+														myItemPicture: picture, 
+														matchedItemTitle : matchedItem.get("title"), 
+														matchedItemDescription:matchedItem.get("description"), 
+														matchedItemContact:contactInfo,
+														matchedItemPicture: matchedItem.get("picture").url(),
+														myItemID : myItemID,
+														matchedItemID: matchedItem.id,
+														myItem : myItem,
+														matchedItem : matchedItem
+													});	
+				   
+				
+						}
+					});	
+				});
+			});
+  	}
 
-	$scope.deleteAllReferences = function(myItemID, matchedItemID){
-		alert(" to implement : delete all references upon trade completion for " + myItemID + " and " + matchedItemID);
+
+// IMPLEMENT LATER: Delete all references when trade is complete
+	var queryToDeleteItem = new Parse.Query(ItemForSale);
+
+	$scope.tradeCompleted = function(myItem, matchedItem){
+		//updating my item array
+		var myArrayOfItems = currentUser.get("myItems");
+		var index = myArrayOfItems.indexOf(myItem.id);
+		if (index > -1) {
+			myArrayOfItems.splice(index, 1);
+		}
+		currentUser.set("myItems",myArrayOfItems);
+		currentUser.save();
+
+		//getting all objects that may have a link to this object
+		var offeredToArray = myItem.get("offeredTo");
+		var offeredFromArray = myItem.get("offeredItems");
+		var matchedItemsArray = myItem.get("matchedItemIDs");
+		var arrayToDeleteRef = offeredToArray.concat(offeredFromArray);
+		arrayToDeleteRef = arrayToDeleteRef.concat(matchedItemsArray);
+
+		//updating "offeredItems" and "matchedItemIDs" and "offeredTo" field of objects that there is a link to
+		queryToDeleteItem.containedIn("objectId", arrayToDeleteRef);
+	    queryToDeleteItem.find().then(function(results){
+	    	results.forEach(function(oItem){
+
+	    		oItem.remove("offeredItems", myItem.id);
+	    		oItem.remove("matchedItemIDs", myItem.id);
+	    		oItem.remove("offeredTo", myItem.id);
+	    		oItem.save();
+
+				asynchCallToRemoveRelations(myItem, oItem);
+			});
+	    });
+
+		//updating master list
+		myItem.destroy({
+			  success: function(myObject) {
+			    alert("object successfully destroyed");
+			  },
+			  error: function(myObject, error) {
+			    alert("failed to remove your item.");
+			  }
+		});
+
 	}
+
+
+	function asynchCallToRemoveRelations(myItem, matchedItem){
+			var relation = myItem.relation("matchedItem");
+			relation.remove(matchedItem);
+			var theirRelation = matchedItem.relation("matchedItem");
+			theirRelation.remove(myItem);
+			myItem.save();
+			matchedItem.save();
+  	}
+
+
+  	$scope.tradeCancelled = function(myItem, matchedItem){
+  		alert("trade cancelled!");
+
+  		matchedItem.remove("offeredItems", myItem.id);
+		matchedItem.remove("matchedItemIDs", myItem.id);
+		matchedItem.remove("offeredTo", myItem.id);
+		matchedItem.save();
+
+		myItem.remove("offeredItems", matchedItem.id);
+		myItem.remove("matchedItemIDs", matchedItem.id);
+		myItem.remove("offeredTo", matchedItem.id);
+		myItem.save();
+
+		//removing relations
+
+		asynchCallToRemoveRelations(myItem, matchedItem);
+		
+	}
+
+
 
 });
 

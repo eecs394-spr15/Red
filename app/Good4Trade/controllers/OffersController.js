@@ -37,6 +37,10 @@ g4tapp.controller("OffersController", function($scope,supersonic){
 			var name = "";
 			var phone = "";
 			var email = "";
+
+			myItem.remove("offeredItems",offeredItem.id);
+			myItem.save();
+			
 			queryOwnerOfOfferedItem.get(offeredItem.get("userID"),{
 				success: function(user) {
 				    name = user.get("username");
@@ -52,8 +56,8 @@ g4tapp.controller("OffersController", function($scope,supersonic){
 						supersonic.ui.modal.hide();
 						});
 
-					myItem.set("matchedItemID", offeredItem.id);
-					offeredItem.set("matchedItemID", myItem.id);
+					myItem.addUnique("matchedItemIDs", offeredItem.id);
+					offeredItem.addUnique("matchedItemIDs", myItem.id);
 
 					var myItemRelation = myItem.relation("matchedItem");
 					myItemRelation.add(offeredItem);

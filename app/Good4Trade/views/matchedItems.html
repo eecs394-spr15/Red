@@ -25,10 +25,13 @@
 	    	<p style="white-space: normal">{{mitem.matchedItemContact}}</p>
 	  </div>
 
-	  <button ng-click="tradeCompleted(mitem.myItem, mitem.matchedItem)" width=400 height=500 class="button button-block button-positive"> Trade Completed </button>
+    <div class="button-bar" width=400 height=500>
+	  <button ng-click="tradeCompleted(mitem.myItem, mitem.matchedItem)" class="button icon-left super-checkmark-round button-calm"> Complete </button>
 	  
-	  <button ng-click="tradeCancelled(mitem.myItem, mitem.matchedItem)" width=400 height=500 class="button button-block button-positive"> Trade Cancelled </button>
+	  <button ng-click="tradeCancelled(mitem.myItem, mitem.matchedItem)" class="button icon-left super-close-round button-calm"> Cancel </button>
 	  </div>
+
+    </div>
     </a>
 
 

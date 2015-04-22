@@ -1,0 +1,36 @@
+<div ng-controller="DescriptionController">
+  <super-navbar>
+    <super-navbar-title>
+      Description
+    </super-navbar-title>
+    <super-navbar-button class="item-icon-right" side="right" location="Good4Trade#addItem">
+     Add
+    </super-navbar-button>
+  </super-navbar>
+  <div class="list">
+  
+  	<div class="item item-divider" style="text-align: center">
+  		{{iTitle}}
+  	</div>
+  	
+  	<div class="item item-image">
+  		<img src={{iPicture}} />
+  	</div>
+  	
+  	<div class="item item-divider" style="text-align: center">
+  		Description
+  	</div>
+  	
+  	<div class="item">
+  		{{iDescription}}
+  	</div>
+  	
+  	<div class="item item-divider" style="text-align: center">
+  		What I for it...
+  	</div>
+  	
+  	<div class="item">
+  		{{iWishList}}
+  	</div>
+  	
+  </div>

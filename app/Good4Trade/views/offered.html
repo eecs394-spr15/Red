@@ -14,7 +14,10 @@
         <img src= {{oitem.picture}}>
   
         <h2 > {{oitem.title}}</h2>
-        <p style="white-space: normal; width: 12em"> {{oitem.description}}</p>
+        <p style="white-space: nowrap; width: 12em"> {{oitem.description}}</p>
+        <super-navigate location="Good4Trade#itemDescription" data-params-id="{{oitem.offeredItem.id}}">
+      <button class="button button-small button-outline button-positive">More...</button>
+      </super-navigate>
         <div class="buttons">
           <div class="col col-center padding-top">
 

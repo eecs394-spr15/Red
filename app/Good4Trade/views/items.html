@@ -30,7 +30,10 @@
   <img   src= {{mitem.picture}}>
   
         <h2 > {{mitem.title}}</h2>
-        <p style="white-space: normal; width: 10em"> {{mitem.description}}</p>
+        <p style="white-space: nowrap; width: 10em"> {{mitem.description}}</p>
+        <super-navigate location="Good4Trade#itemDescription" data-params-id="{{mitem.id}}">
+      <button class="button button-small button-outline button-positive">More...</button>
+      </super-navigate>
         <div class="buttons">
           <div class="col col-center padding-top">
             <super-modal-show location="Good4Trade#index">

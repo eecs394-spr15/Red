@@ -8,6 +8,9 @@
 	    <super-navbar-title>
 	      My Items
 	    </super-navbar-title>
+	    <super-navbar-button class="item-icon-right" side="right" ng-click="refresh()">
+     		Refresh
+    	</super-navbar-button>
 	</super-navbar>
 
 
@@ -26,18 +29,18 @@
 
 -->
     <div ng-repeat="mitem in myitems" class="list card">
-    	<super-navigate location="Good4Trade#itemDescription" data-params-id="{{mitem.id}}">
+    	<super-navigate location="Good4Trade#myItemDescription" data-params-id="{{mitem.id}}">
     		<div class="item item-thumbnail-left item-button-right">
     			<img class="full-image" src={{mitem.picture}}>
     			<h2>{{mitem.title}}</h2>
     			<p style="white-space: nowrap; width: 10em">{{mitem.description}}</p>
       			<div class="buttons">
         			<div class="col col-center padding-top">
-          				<super-modal-show location="Good4Trade#index">
-              				<button class="button button-large button-outline button-calm" ng-click="addToOfferList(mitem.id)">
+          				<super-navigate-back>
+              				<button class="button button-large button-clear button-calm" ng-click="addToOfferList(mitem.myItem)">
                 				Offer
               				</button>
-            			</super-modal-show>
+            			</super-navigate-back>
         			</div>
       			</div>
     		</div>

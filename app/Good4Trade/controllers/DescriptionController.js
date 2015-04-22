@@ -25,45 +25,17 @@ g4tapp.controller("DescriptionController", function($scope,supersonic){
 			    alert("retrieving offered items failed!");
 			  }
 	});
-//update the relation in the database upon acceptance
-	$scope.acceptItem = function(myItem,offeredItem){
-			
-			var name = "";
-			var phone = "";
-			var email = "";
-			queryOwnerOfOfferedItem.get(offeredItem.get("userID"),{
-				success: function(user) {
-				    name = user.get("username");
-				    phone = user.get("phone");
-				    email = user.get("email");
-				    var contactInfo = {
-							message: "\n\n Contact " + name + " at:\n " + phone + " or at:\n " + email,
-					 		buttonLabel: "Close"
-						};
-
-					supersonic.ui.dialog.alert("Successfully Traded!", contactInfo).then(function() {
-						supersonic.logger.log("Alert closed.");
-						supersonic.ui.modal.hide();
-						});
-
-					myItem.set("matchedItemID", offeredItem.id);
-					offeredItem.set("matchedItemID", myItem.id);
-
-					var myItemRelation = myItem.relation("matchedItem");
-					myItemRelation.add(offeredItem);
-					var offeredItemRelation = offeredItem.relation("matchedItem");
-					offeredItemRelation.add(myItem);
-
-					offeredItem.save();		
-					myItem.save();
-				  },
-				  error: function(object, error) {
-				    alert("failed to retrieve owner of offered item!");
-				  }
-
-			});
-
-		}
-
+	
+	$scope.editThisItem = function(){
+		queryMyItem.get($scope.myItemId, {
+			success: function(myItem) {
+				myItem.set("title", $scope.thisItem.title);
+				myItem.set("description", $scope.thisItem.description);
+				myItem.set("wishList", $scope.thisItem.wishList);
+				myItem.save();
+				supersonic.ui.layers.pop();
+			}
+		});
+	}
 
 });

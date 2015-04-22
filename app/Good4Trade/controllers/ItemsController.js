@@ -15,6 +15,10 @@ g4tapp.controller("ItemsController", function($scope,supersonic){
 	$scope.cancel = function(){
 		supersonic.ui.modal.hide();
 	}
+	
+	$scope.refresh = function(){
+		location.reload();
+	}
 
 	$scope.showMatch = function(){
 		supersonic.ui.dialog.alert("You Have a Match!!", options).then(function() {
@@ -57,7 +61,7 @@ g4tapp.controller("ItemsController", function($scope,supersonic){
 					  message: "Your offer to Trade has been sent",
 					  buttonLabel: "Close"
 					};
-					supersonic.ui.modal.hide();
+					//supersonic.ui.modal.hide();
 					supersonic.ui.dialog.alert("Success!", options).then(function() {
 					  supersonic.logger.log("Alert closed.");
 					});

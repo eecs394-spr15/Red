@@ -31,23 +31,24 @@
     </label>
   </div>  
 
-    <a ng-repeat="mitem in items|filter:keyword" class="item item-thumbnail-left item-button-right" href="#">
-    	<img src= {{mitem.picture}}>
-      <h2>{{mitem.title}}</h2>
-      <p style="white-space: nowrap; width: 12em">{{mitem.description}}</p>
-      <super-navigate location="Good4Trade#itemDescription" data-params-id="{{mitem.id}}">
-      <button class="button button-small button-outline button-positive">More...</button>
-      </super-navigate>
-      <div class="buttons">
-        <div class="col col-center padding-top">
-          <super-navigate location="Good4Trade#items" data-params-id="{{mitem.id}}">
-            <button class="button button-large button-outline button-balanced">
-              Trade 
-            </button>
-          </super-navigate>
-        </div>
-      </div>
-     </a>
+    <div ng-repeat="mitem in items|filter:keyword" class="list card">
+    	<super-navigate location="Good4Trade#itemDescription" data-params-id="{{mitem.id}}">
+    		<div class="item item-thumbnail-left item-button-right">
+    			<img class="full-image" src={{mitem.picture}}>
+    			<h2>{{mitem.title}}</h2>
+    			<p style="white-space: nowrap; width: 12em">{{mitem.description}}</p>
+      			<div class="buttons">
+        			<div class="col col-center padding-top">
+          				<super-navigate location="Good4Trade#items" data-params-id="{{mitem.id}}">
+            				<button class="button button-large button-outline button-calm">
+            	 				Trade 
+            				</button>
+          				</super-navigate>
+        			</div>
+      			</div>
+    		</div>
+    	</super-navigate>
+     </div>
 
   </div>
 

@@ -41,7 +41,12 @@ tab-bar-item#geolocation {
 tab-bar-item#index {
   background-image: url(icons/home.svg);
 }
-
+tab-bar-item#matchedItems {
+  background-image: url(icons/ios7-loop-strong.svg);
+}
 tab-bar-item#internet {
   background-image: url(icons/search.svg);
+}
+tab-bar-item#bag {
+  background-image: url(icons/bag.svg);
 }

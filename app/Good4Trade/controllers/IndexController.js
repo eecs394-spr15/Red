@@ -5,9 +5,9 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 
 //logging in user, for testing
 
-	Parse.User.logIn("liam", "password").then(function(user) {
+	//Parse.User.logIn("liam", "password").then(function(user) {
 		//alert("logged in as " + user.get("username"));					    	
-	});
+	//});
 
 //GLOBAL CURRENT USER VARIABLE
 
@@ -16,6 +16,8 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 //initializing items
 	var ItemForSale = Parse.Object.extend("ItemForSale");
 
+//search filter variable
+	$scope.keyword = "";
 
 //ALL ITEMS EXCEPT LOGGED IN USER'S
 	var query = new Parse.Query(ItemForSale);
@@ -140,13 +142,49 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 				success: function(user) {
 					user.save(null, {
 						success: function(user) {
-						alert("successfully logged in");
+						supersonic.ui.dialog.alert("successfully logged in");
 						supersonic.ui.initialView.dismiss();
 						}
 					});
 				}
 			});
 	}
+
+
+	$scope.editThisUser = function(){
+		var queryEditUser = new Parse.Query(Parse.User);
+        queryEditUser.get(currentUser.id, {
+          success: function(userAgain) {
+            userAgain.set("username", $scope.editUser.username);
+            userAgain.set("password", $scope.editUser.password);
+			userAgain.set("email", $scope.editUser.email);
+			userAgain.set("phone",  $scope.editUser.phone);
+			currentUser = Parse.User.current();
+			$scope.thisUser.push({ 	userName: currentUser.get("username"), 
+									Email: currentUser.get("email"), 
+									Phone: currentUser.get("phone"),
+									thispassword: currentUser.get("password")
+								});
+			$scope.thisuser = $scope.thisUser[0];
+			alert(" Successfully updated your profile! "+ userAgain.get("username"));
+            userAgain.save(null, {
+              error: function(userAgain, error) {
+                // This will error, since the Parse.User is not authenticated
+              }
+            });
+            }
+        });
+	}
+
+
+		$scope.thisUser = [];
+
+			$scope.thisUser.push({ 	userName: currentUser.get("username"), 
+									Email: currentUser.get("email"), 
+									Phone: currentUser.get("phone"),
+									thispassword: currentUser.get("password")
+								});
+	$scope.thisuser = $scope.thisUser[0];
 
 
 
@@ -207,21 +245,34 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 	function asynchCallToUpdateMatchedItems(myItem, title, description, picture, myItemID){
 			var relation = myItem.relation("matchedItem");
   			var matchedItem= {};
-  			relation.query().find().then(function(matchResult){
-			    matchedItem= matchResult[0];
+  			  relation.query().find().then(function(matchResult){
+  				for (var i = 0; i < matchResult.length; i++){
+			    matchedItem = matchResult[i];
+			    var queryOwnerOfMatchedItem = new Parse.Query(Parse.User);
+			    queryOwnerOfMatchedItem.get(matchedItem.get("userID"),{
+				success: function(user) {
+				    name = user.get("username");
+				    phone = user.get("phone");
+				    email = user.get("email");
+				    var contactInfo =  "\n\n Contact " + name + " at:\n " + phone + " or at:\n " + email
+			
 			    $scope.matchedItemList.push({ 	myItemTitle: title, 
 												myItemDescription: description, 
 												myItemPicture: picture, 
 												matchedItemTitle : matchedItem.get("title"), 
 												matchedItemDescription:matchedItem.get("description"), 
+												matchedItemContact:contactInfo,
 												matchedItemPicture: matchedItem.get("picture").url(),
 												myItemID : myItemID,
 												matchedItemID: matchedItem.id
 											});	
-
-			});		
-		}
-
+			   
+			
+			}
+		});	
+	}
+	});
+  }
 // IMPLEMENT LATER: Delete all references when trade is complete
 
 	$scope.deleteAllReferences = function(myItemID, matchedItemID){

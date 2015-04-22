@@ -3,22 +3,28 @@
       <super-navbar-title>
         Matched Items
       </super-navbar-title>
+    <super-navbar-button class="item-icon-left" side="left" onClick="supersonic.ui.drawers.open('left')">
+     ooo
+    </super-navbar-button>
     </super-navbar>
 
    
     <a ng-repeat="mitem in matchedItemList" class="list card" >
+    <div class="card">
 
 	  <div class="item item-avatar">
 	    <img src={{mitem.myItemPicture}}>
 	    <h2>You traded your {{mitem.myItemTitle}}</h2>
-	    <p> for a {{mitem.matchedItemTitle}}</p>
 	  </div>
 
-	  <div class="item item-image">
+	  <div class="item item-avatar">
 	    <img src= {{mitem.matchedItemPicture}}>
+	    	<h2> for a {{mitem.matchedItemTitle}}</h2>
+	    	<p style="white-space: normal">{{mitem.matchedItemContact}}</p>
 	  </div>
 
 	  <button ng-click="deleteAllReferences(mitem.myItemID, mitem.matchedItemID)" width=400 height=500 class="button button-block button-positive"> Trade Completed </button>
+	  </div>
 
     </a>
 

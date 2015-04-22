@@ -12,14 +12,14 @@ module.exports =
     }
     {
       title: "My Items"
-      id: "geolocation"
+      id: "bag"
       location: "Good4Trade#myitems" # URLs are supported!
     }
-    {
-      title: "Search"
-      id: "internet"
-      location: "Good4Trade#addItem"
-    }
+#    {
+#      title: "Search"
+#      id: "internet"
+#      location: "Good4Trade#addItem"
+#    }
     {
       title : "Matched Items"
       id: "matchedItems"

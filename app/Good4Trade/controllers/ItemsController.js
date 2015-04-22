@@ -53,7 +53,7 @@ g4tapp.controller("ItemsController", function($scope,supersonic){
 					  message: "Your offer to Trade has been sent",
 					  buttonLabel: "Close"
 					};
-
+					supersonic.ui.modal.hide();
 					supersonic.ui.dialog.alert("Success!", options).then(function() {
 					  supersonic.logger.log("Alert closed.");
 					});

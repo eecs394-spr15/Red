@@ -129,6 +129,8 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 			user.set("password", $scope.newUser.password);
 			user.set("email", $scope.newUser.email);
 			user.set("phone",  $scope.newUser.phone);
+			user.set("favoriteList", []);
+			user.set("myItems", []);
 			user.signUp(null, {
 			success: function(user) {
 				supersonic.ui.initialView.dismiss();

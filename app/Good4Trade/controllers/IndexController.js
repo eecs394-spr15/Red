@@ -248,19 +248,31 @@ g4tapp.controller("IndexController", function($scope,supersonic){
   			relation.query().find().then(function(matchResult){
   				for (var i = 0; i < matchResult.length; i++){
 			    matchedItem = matchResult[i];
+			    var queryOwnerOfMatchedItem = new Parse.Query(Parse.User);
+			    queryOwnerOfMatchedItem.get(matchedItem.get("userID"),{
+				success: function(user) {
+				    name = user.get("username");
+				    phone = user.get("phone");
+				    email = user.get("email");
+				    var contactInfo =  "\n\n Contact " + name + " at:\n " + phone + " or at:\n " + email
+			
 			    $scope.matchedItemList.push({ 	myItemTitle: title, 
 												myItemDescription: description, 
 												myItemPicture: picture, 
 												matchedItemTitle : matchedItem.get("title"), 
 												matchedItemDescription:matchedItem.get("description"), 
+												matchedItemContact:contactInfo,
 												matchedItemPicture: matchedItem.get("picture").url(),
 												myItemID : myItemID,
 												matchedItemID: matchedItem.id
 											});	
+			   
+			
 			}
-			});	
-
+		});	
 		}
+	});
+  }
 
 // IMPLEMENT LATER: Delete all references when trade is complete
 

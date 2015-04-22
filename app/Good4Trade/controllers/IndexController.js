@@ -2,7 +2,7 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 
 //INITIALIZING
 	Parse.initialize("eQLx1O6y08roi9FxLvTY5lOLdFeZ3NtmHO0tTNQF", "0fJ1VZtzTJS2d2FC4U4DxUscRYGF6Ix5Jg60W5rn");
-
+	//supersonic.ui.views.current.whenVisible( function() { location.reload(); });
 //logging in user, for testing
 
 	//Parse.User.logIn("liam", "password").then(function(user) {

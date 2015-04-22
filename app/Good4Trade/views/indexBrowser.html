@@ -1,0 +1,35 @@
+<div ng-controller="IndexController">
+  <super-navbar>
+    <super-navbar-title>
+      Good4Trade
+    </super-navbar-title>
+    <super-navbar-button class="item-icon-right" side="right" ng-click="refresh()">
+     Refresh
+    </super-navbar-button>
+  
+  </super-navbar>
+
+  <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
+  <div ng-hide="showSpinner">
+
+  <div class="list list-inset">
+    <label class="item item-input">
+      <i class="icon super-search placeholder-icon"></i>
+      <input type="text" placeholder="Search" ng-model="keyword">
+    </label>
+  </div>  
+
+    <div ng-repeat="mitem in items" class="list card">
+    	<super-navigate location="Good4Trade#itemDescriptionBrowse" data-params-id="{{mitem.id}}">
+    		<div class="item item-thumbnail-left item-button-right">
+    			<img class="full-image" src={{mitem.picture}}>
+    			<h2>{{mitem.title}}</h2>
+    			<p style="white-space: normal">{{mitem.description}}</p>
+    		</div>
+    	</super-navigate>
+     </div>
+
+  </div>
+
+</div>
+

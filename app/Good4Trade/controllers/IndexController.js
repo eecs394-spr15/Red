@@ -19,6 +19,11 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 //search filter variable
 	$scope.keyword = "";
 
+// use for refresh
+	$scope.refresh = function(){
+		location.reload();
+	}
+
 //ALL ITEMS EXCEPT LOGGED IN USER'S
 	var query = new Parse.Query(ItemForSale);
 	$scope.items = [];
@@ -55,7 +60,8 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 					supersonic.ui.dialog.alert("Success!", options).then(function() {
 					  supersonic.logger.log("Alert closed.");
 					});
-
+					supersonic.ui.layers.pop();
+					
 				}, function(error) {
 					alert("item save failed");
 				// the save failed.

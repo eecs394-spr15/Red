@@ -7,9 +7,27 @@
   <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
   <div ng-hide="showSpinner">
 
+    <div ng-repeat="oitem in offeredItems" class="list card">
+    	<super-navigate location="Good4Trade#itemDescription" data-params-id="{{oitem.offeredItem.id}}">
+    		<div class="item item-thumbnail-left item-button-right">
+    			<img class="full-image" src={{oitem.picture}}>
+    			<h2>{{oitem.title}}</h2>
+    			<p style="white-space: nowrap; width: 12em">{{oitem.description}}</p>
+      			<div class="buttons">
+        			<div class="col col-center padding-top">
+            			<super-modal-hide>
+                			<button class="button button-large button-outline button-calm" ng-click="acceptItem(oitem.myItem, oitem.offeredItem)">
+                    			Accept
+                			</button>
+            			</super-modal-hide>
+        			</div>
+      			</div>
+    		</div>
+    	</super-navigate>
+     </div>
 
 
-    <a ng-repeat="oitem in offeredItems" class="item item-thumbnail-left item-button-right" href="#">
+<!--    <a ng-repeat="oitem in offeredItems" class="item item-thumbnail-left item-button-right" href="#">
 
         <img src= {{oitem.picture}}>
   
@@ -30,7 +48,7 @@
           </div>
         </div>
 
-    </a>
+    </a> -->
 
     </div>
 </div>

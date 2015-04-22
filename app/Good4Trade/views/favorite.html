@@ -1,16 +1,9 @@
-<!--
--->
-<div ng-controller="IndexController">
+<div ng-controller="FavoriteController">
   <super-navbar>
     <super-navbar-title>
-      Good4Trade
+      My Favorite
     </super-navbar-title>
 
-    <!--
-    <super-navbar-button class="item-icon-right" side="right" location="Good4Trade#mapView">
-     Map View
-    </super-navbar-button>
-    -->
     <super-navbar-button class="item-icon-right" side="right" ng-click="refresh()">
      Refresh
     </super-navbar-button>
@@ -31,12 +24,12 @@
     </label>
   </div>  
 
-    <div ng-repeat="mitem in items|filter:keyword" class="list card">
+    <div ng-repeat="mitem in myitems|filter:keyword" class="list card">
     	<super-navigate location="Good4Trade#itemDescription" data-params-id="{{mitem.id}}">
     		<div class="item item-thumbnail-left item-button-right">
     			<img class="full-image" src={{mitem.picture}}>
     			<h2>{{mitem.title}}</h2>
-    			<p style="white-space: nowrap; width: 10em">{{mitem.description}}</p>
+    			<p style="white-space: nowrap; width: 12em">{{mitem.description}}</p>
       			<div class="buttons">
         			<div class="col col-center padding-top">
           				<super-navigate location="Good4Trade#items" data-params-id="{{mitem.id}}">

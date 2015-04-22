@@ -32,16 +32,7 @@ g4tapp.controller("DescriptionController", function($scope,supersonic){
 				myItem.set("title", $scope.thisItem.title);
 				myItem.set("description", $scope.thisItem.description);
 				myItem.set("wishList", $scope.thisItem.wishList);
-				myItem.save(null, {
-					success: function(myItem) {
-						myItem.set("title", $scope.thisItem.title);
-						myItem.set("description", $scope.thisItem.description);
-						myItem.set("wishList", $scope.thisItem.wishList);
-					},
-					error: function(myItem, error) {
-						alert("Something went wrong");
-					}
-				});
+				myItem.save();
 				supersonic.ui.layers.pop();
 			}
 		});

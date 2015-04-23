@@ -50,3 +50,7 @@ tab-bar-item#internet {
 tab-bar-item#bag {
   background-image: url(icons/bag.svg);
 }
+
+tab-bar-item#star{
+  background-image: url(icons/ios7-star-outline.svg);
+}

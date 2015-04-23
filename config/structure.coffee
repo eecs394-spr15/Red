@@ -27,7 +27,7 @@ module.exports =
     }
     {
       title : "Favorites"
-      id: "favorites"
+      id: "star"
       location: "Good4Trade#favorite"
     }
 

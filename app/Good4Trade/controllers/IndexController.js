@@ -182,7 +182,7 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 									thispassword: currentUser.get("password")
 								});
 			$scope.thisuser = $scope.thisUser[0];
-			alert(" Successfully updated your profile! "+ userAgain.get("username"));
+			alert(" Successfully updated your profile! "+ userAgain.get("username")+"\n Restart the app to view your new profile!");
             userAgain.save(null, {
               error: function(userAgain, error) {
                 // This will error, since the Parse.User is not authenticated

@@ -11,9 +11,6 @@
      Map View
     </super-navbar-button>
     -->
-    <super-navbar-button class="item-icon-right" side="right" ng-click="refresh()">
-     Refresh
-    </super-navbar-button>
     
     <super-navbar-button class="item-icon-left" side="left" onClick="supersonic.ui.drawers.open('left')">
      ooo
@@ -23,6 +20,12 @@
 
   <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
   <div ng-hide="showSpinner">
+
+  <div class="col col-33 col-offset-33">
+    <button class="button button-clear button-small button-balanced" ng-click="refresh()">
+            click to refresh
+    </button>
+  </div>
 
   <div class="list list-inset">
     <label class="item item-input">

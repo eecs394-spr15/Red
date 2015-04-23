@@ -159,7 +159,7 @@ g4tapp.controller("DescriptionController", function($scope,supersonic){
 
  		if(flag == false){
  			currentUser.addUnique("favoriteList",$scope.myItemId);
- 			btn.style.backgroundColor = "#DC143C";
+ 			btn.style.backgroundColor = "#FA7F7F";
 			alert("add favorite");
 
 		}

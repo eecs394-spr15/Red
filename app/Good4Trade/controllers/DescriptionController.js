@@ -1,7 +1,9 @@
 g4tapp.controller("DescriptionController", function($scope,supersonic){
 
 	Parse.initialize("eQLx1O6y08roi9FxLvTY5lOLdFeZ3NtmHO0tTNQF", "0fJ1VZtzTJS2d2FC4U4DxUscRYGF6Ix5Jg60W5rn");
+	var User = Parse.Object.extend("User");	
 	var ItemForSale = Parse.Object.extend("ItemForSale");
+	var currentUser = Parse.User.current();	
 	
 	supersonic.ui.views.current.params.onValue(function(values){
 		$scope.myItemId = values.id;
@@ -97,6 +99,48 @@ g4tapp.controller("DescriptionController", function($scope,supersonic){
 			  }
 		});
 	}
+
+
+
+	$scope.editFavorite = function(heartbutton){
+
+		var btn = document.getElementById('heartbutton');
+/*
+	if (count == 0){
+        btn.style.backgroundColor = "#DC143C";
+        count=1;        
+    }
+    else{
+        btn.style.backgroundColor = "#0099FF"
+        count=0;
+    }
+
+*/
+		var flag = false;
+ 		var favoriteList = currentUser.get("favoriteList");
+ 		for(var i=0; i < length; i++){
+ 			if(favoriteList[i] == $scope.myItemId){
+ 			    flag = true;
+ 				currentUser.remove("favoriteList",$scope.myItemId);
+ 				btn.style.backgroundColor = "#0099FF"
+ 				alert("cancel favorite");
+ 			}
+ 		}
+
+ 		if(flag == false){
+ 			currentUser.addUnique("favoriteList",$scope.myItemId);
+ 			btn.style.backgroundColor = "#DC143C";
+			alert("add favorite");
+
+		}
+		currentUser.save();	
+		//alert(itemid);
+
+		
+	}
+
+
+
 
 	function asynchCallToRemoveRelations(myItem, matchedItem){
 		var relation = myItem.relation("matchedItem");

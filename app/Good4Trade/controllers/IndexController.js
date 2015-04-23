@@ -158,11 +158,21 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 				success: function(user) {
 					user.save(null, {
 						success: function(user) {
-						supersonic.ui.dialog.alert("successfully logged in");
+						supersonic.ui.dialog.alert("Successfully Logged In.");
 						supersonic.ui.initialView.dismiss();
 						}
 					});
-				}
+				},
+				error: function( error) {
+				    var options = {
+					  message: "Log In Failed.",
+					  buttonLabel: "Close"
+					};
+
+					supersonic.ui.dialog.alert("Error", options).then(function() {
+					 supersonic.logger.log("Alert closed.");
+					});
+			  }
 			});
 	}
 

@@ -5,15 +5,12 @@
         Cancel
       </super-navbar-button>
     -->
-    <!--
+
     <super-navbar-button class="item-icon-left" side="left" onClick="supersonic.ui.drawers.open('left')">
      ooo
     </super-navbar-button>
-    -->
-     <super-navbar-button class="item-icon-right" side="left" ng-click="refresh()">
-        Refresh
-    </super-navbar-button>
-    
+
+   
       <super-navbar-title>
         My Items
       </super-navbar-title>
@@ -23,6 +20,11 @@
 
     </super-navbar>
 
+  <div style="text-align: center">
+    <button class="button button-clear button-calm" ng-click="refresh()">
+            click to refresh
+    </button>
+  </div>
     <div ng-repeat="mitem in myitems" class="list card">
     	<super-navigate location="Good4Trade#myItemDescription" data-params-id="{{mitem.id}}">
     		<div class="item item-thumbnail-left item-button-right">

@@ -8,9 +8,6 @@
 	    <super-navbar-title>
 	      My Items
 	    </super-navbar-title>
-	    <super-navbar-button class="item-icon-right" side="right" ng-click="refresh()">
-     		Refresh
-    	</super-navbar-button>
 	</super-navbar>
 
 
@@ -28,6 +25,12 @@
 	</label>
 
 -->
+
+  <div style="text-align: center">
+    <button class="button button-clear button-calm" ng-click="refresh()">
+            click to refresh
+    </button>
+  </div>
     <div ng-repeat="mitem in myitems" class="list card">
     	<super-navigate location="Good4Trade#myItemDescription" data-params-id="{{mitem.id}}">
     		<div class="item item-thumbnail-left item-button-right">

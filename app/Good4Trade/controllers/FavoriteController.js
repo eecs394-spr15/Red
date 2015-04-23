@@ -32,8 +32,8 @@ g4tapp.controller("FavoriteController", function($scope,supersonic){
 					picture:iItem.get("picture").url(), myItem: iItem
 					});
 				}
-				currentUser.set("favoriteList",results);
-				currentUser.save();
+				//currentUser.set("favoriteList",results);
+				//currentUser.save();
 		});
 
 	}

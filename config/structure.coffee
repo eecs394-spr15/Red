@@ -25,6 +25,11 @@ module.exports =
       id: "matchedItems"
       location: "Good4Trade#matchedItems"
     }
+    {
+      title : "Favorites"
+      id: "favorites"
+      location: "Good4Trade#favorite"
+    }
 
   ]
 #   rootView:

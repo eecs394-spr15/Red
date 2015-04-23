@@ -10,7 +10,12 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 	//});
 
 //GLOBAL CURRENT USER VARIABLE
-
+	Parse.GeoPoint.current({
+		success: function (point) {
+			$scope.myLocation = point;
+		}
+	});
+	
 	var currentUser = Parse.User.current();
 
 //initializing items

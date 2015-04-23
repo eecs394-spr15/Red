@@ -9,20 +9,50 @@ g4tapp.controller("DescriptionController", function($scope,supersonic){
 		$scope.myItemId = values.id;
 	})
 
+	function calcCrow(lat1, lon1, lat2, lon2) 
+    {
+      var R = 6371; // km
+      var dLat = toRad(lat2-lat1);
+      var dLon = toRad(lon2-lon1);
+      var lat1 = toRad(lat1);
+      var lat2 = toRad(lat2);
+
+      var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+      var d = R * c;
+      return d;
+    }
+
+    // Converts numeric degrees to radians
+    function toRad(Value) 
+    {
+        return Value * Math.PI / 180;
+    }
+	
+	
 	$scope.offeredItems =[];
 	var queryMyItem = new Parse.Query(ItemForSale);
 	$scope.iPicture = "";
 	$scope.iTitle = "";
 	$scope.iWishList = "";
 	$scope.iDescription = "";
-
+	$scope.iLocation = new Parse.GeoPoint(0, 0);
+	Parse.GeoPoint.current({
+		success: function (point) {
+			$scope.myLocation = point;
+		}
+	});
+	$scope.distance = 0.0;
+	
 	queryMyItem.get($scope.myItemId, {
 			success: function(myItem) {
 				$scope.iPicture = myItem.get("picture").url();
 				$scope.iTitle = myItem.get("title");
 				$scope.iWishList = myItem.get("wishList");
 				$scope.iDescription = myItem.get("description");
-				$scope.myItem = myItem;
+				$scope.iLocation = myItem.get("location");
+				$scope.distance = Math.round($scope.iLocation.milesTo($scope.myLocation) * 0.621371 * 100) / 100;
 				},
 			error: function(object, error) {
 			    alert("retrieving offered items failed!");

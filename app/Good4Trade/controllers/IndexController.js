@@ -25,15 +25,50 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 	$scope.keyword = "";
 
 // use for refresh
-	$scope.refresh = function(){
-		location.reload();
-	}
+	$scope.sortLocation = function(){
+		$scope.items= [];
+	//	location.reload();
+	var query5 = new Parse.Query(ItemForSale);
+
+		var tmpp = new Parse.GeoPoint(42, -87);
+		query.near("location", tmpp);
+	query.notEqualTo("userID", currentUser.id);
+	// query.limit(10);
+
+	query.find().then(function(mItem){
+		for (var i = 0; i < mItem.length;i++){
+		iItem = mItem[i];
+		$scope.items.push({id:iItem.id, url:iItem.get("url"),title:iItem.get("title"),description:iItem.get("description"), picture:iItem.get("picture").url()});
+		}
+	});
+
+}
+	$scope.sortTime = function(){
+		$scope.items= [];
+	//	location.reload();
+	var query6 = new Parse.Query(ItemForSale);
+
+	query6.descending("createdAt");
+
+	query6.find().then(function(mItem){
+		for (var i = 0; i < mItem.length;i++){
+		iItem = mItem[i];
+		$scope.items.push({id:iItem.id, url:iItem.get("url"),title:iItem.get("title"),description:iItem.get("description"), picture:iItem.get("picture").url()});
+		}
+	});
+
+}
 
 //ALL ITEMS EXCEPT LOGGED IN USER'S
 	var query = new Parse.Query(ItemForSale);
 	$scope.items = [];
-	query.descending("createdAt");
-	
+	$scope.sortByTime = true;
+	if($scope.sortByTime){
+		query.descending("createdAt");
+	}else {
+		var tmpp = new Parse.GeoPoint(42, -87);
+		query.near("location", tmpp);
+	}
 	query.notEqualTo("userID", currentUser.id);
 	// query.limit(10);
 
@@ -58,6 +93,7 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 		itemForSale.set("matchedItemIDs",[]);
 		var parseFile = new Parse.File($scope.newItem.title + ".jpg", {base64:$scope.imageData});
 		itemForSale.set("picture", parseFile);
+		itemForSale.set("location", $scope.myLocation);
 		itemForSale.save().then(function(itemForSale) {
 				updateUserArray(itemForSale);
 				var options = {

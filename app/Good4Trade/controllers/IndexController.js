@@ -39,26 +39,7 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 		}
 	});
 
-// Add to favorite or Cancel favorite
-	$scope.editFavorite = function(itemid){
-		var flag = false;
- 		var favoriteList = currentUser.get("favoriteList");
- 		alert(favoriteList.length);
- 		for(var i=0; i < length; i++){
- 			if(favoriteList[i] == itemid){
- 			    flag = true;
- 				currentUser.remove("favoriteList",itemid);
- 				alert("cancel favorite");
- 			}
- 		}
- 		if(flag == false){
- 			currentUser.addUnique("favoriteList",itemid);
-			alert("add favorite");
 
-		}
-		currentUser.save();	
-		//alert(itemid);
-	}
 
 //Add item controller functions ////////////////////////////////////////////////////////////////////////
 	$scope.addItem =function(){

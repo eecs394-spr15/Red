@@ -10,7 +10,12 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 	//});
 
 //GLOBAL CURRENT USER VARIABLE
-
+	Parse.GeoPoint.current({
+		success: function (point) {
+			$scope.myLocation = point;
+		}
+	});
+	
 	var currentUser = Parse.User.current();
 
 //initializing items
@@ -39,26 +44,7 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 		}
 	});
 
-// Add to favorite or Cancel favorite
-	$scope.editFavorite = function(itemid){
-		var flag = false;
- 		var favoriteList = currentUser.get("favoriteList");
- 		alert(favoriteList.length);
- 		for(var i=0; i < length; i++){
- 			if(favoriteList[i] == itemid){
- 			    flag = true;
- 				currentUser.remove("favoriteList",itemid);
- 				alert("cancel favorite");
- 			}
- 		}
- 		if(flag == false){
- 			currentUser.addUnique("favoriteList",itemid);
-			alert("add favorite");
 
-		}
-		currentUser.save();	
-		//alert(itemid);
-	}
 
 //Add item controller functions ////////////////////////////////////////////////////////////////////////
 	$scope.addItem =function(){
@@ -196,7 +182,7 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 									thispassword: currentUser.get("password")
 								});
 			$scope.thisuser = $scope.thisUser[0];
-			alert(" Successfully updated your profile! "+ userAgain.get("username"));
+			alert(" Successfully updated your profile! "+ userAgain.get("username")+"\n Restart the app to view your new profile!");
             userAgain.save(null, {
               error: function(userAgain, error) {
                 // This will error, since the Parse.User is not authenticated

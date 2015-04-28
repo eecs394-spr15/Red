@@ -1,7 +1,7 @@
 <div ng-controller="FavoriteController">
   <super-navbar>
     <super-navbar-title>
-      My Favorite
+      My Favorites
     </super-navbar-title>
     
     <super-navbar-button class="item-icon-left" side="left" onClick="supersonic.ui.drawers.open('left')">
@@ -27,7 +27,7 @@
   </div>  
 
     <div ng-repeat="mitem in myitems|filter:keyword" class="list card">
-    	<super-navigate location="Good4Trade#itemDescription" data-params-id="{{mitem.id}}">
+    	<super-navigate location="Good4Trade#itemDescriptionFavorite" data-params-id="{{mitem.id}}">
     		<div class="item item-thumbnail-left item-button-right">
     			<img class="full-image" src={{mitem.picture}}>
     			<h2>{{mitem.title}}</h2>

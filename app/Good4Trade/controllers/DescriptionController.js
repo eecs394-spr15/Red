@@ -120,7 +120,17 @@ g4tapp.controller("DescriptionController", function($scope,supersonic){
 		});
 	}
 
-
+	$scope.removeFavorite = function(){
+		currentUser.remove("favoriteList",$scope.myItemId);
+		var options = {
+			message: "Item has been removed from your favorite list.",
+			buttonLabel: "Close"
+		};
+		supersonic.ui.dialog.alert("Success!", options).then(function() {
+			supersonic.logger.log("Alert closed.");
+		});
+		currentUser.save();
+	}
 
 	$scope.editFavorite = function(heartbutton){
 

@@ -111,7 +111,15 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 				supersonic.ui.layers.pop();
 					
 				}, function(error) {
-					alert("item save failed");
+					var options = {
+					  message: "Failed to save item.",
+					  buttonLabel: "Close"
+					};
+
+					supersonic.ui.dialog.alert("Error!", options).then(function() {
+					  supersonic.logger.log("Alert closed.");
+					});
+
 				// the save failed.
 				});
 		//supersonic.ui.modal.hide();
@@ -128,7 +136,14 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 					}
 				});
 			} else {
-				alert('could not add new Item to User Array');
+				var options = {
+				  message: "Could not update your account with new item.",
+				  buttonLabel: "Close"
+				};
+
+				supersonic.ui.dialog.alert("Error!", options).then(function() {
+				  supersonic.logger.log("Alert closed.");
+				});
 			}
 		}
 
@@ -160,7 +175,14 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 	}
 
 	function onFail(message) {
-		alert('Failed because: ' + message);
+		var options = {
+		  message: "Failed to add item.",
+		  buttonLabel: "Close"
+		};
+
+		supersonic.ui.dialog.alert("Error!", options).then(function() {
+		  supersonic.logger.log("Alert closed.");
+		});
 	}
 
 
@@ -186,7 +208,16 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 									thispassword: currentUser.get("password")
 								});
 			$scope.thisuser = $scope.thisUser[0];
-			alert(" Successfully updated your profile! "+ userAgain.get("username")+"\n Restart the app to view your new profile!");
+
+			var options = {
+				  message: "Successfully updated your profile! "+ userAgain.get("username")+"\n Restart the app to view your new profile!",
+				  buttonLabel: "Close"
+				};
+
+				supersonic.ui.dialog.alert("Success!", options).then(function() {
+				  supersonic.logger.log("Alert closed.");
+				});
+
             userAgain.save(null, {
               error: function(userAgain, error) {
                 // This will error, since the Parse.User is not authenticated

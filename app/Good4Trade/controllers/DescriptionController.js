@@ -37,7 +37,14 @@ g4tapp.controller("DescriptionController", function($scope,supersonic){
 				});
 				$scope.distance = Math.round($scope.myLocation.milesTo($scope.iLocation) * 1000) / 1000;},
 			error: function(object, error) {
-			    alert("retrieving offered items failed!");
+			    var options = {
+				  message: "Failed to retrieve offered items.",
+				  buttonLabel: "Close"
+				};
+
+				supersonic.ui.dialog.alert("Error!", options).then(function() {
+				  supersonic.logger.log("Alert closed.");
+				});
 			  }
 	});
 	
@@ -136,14 +143,28 @@ g4tapp.controller("DescriptionController", function($scope,supersonic){
  			    flag = true;
  				currentUser.remove("favoriteList",$scope.myItemId);
  				btn.style.backgroundColor = "#0099FF"
- 				alert("cancel favorite");
+ 				var options = {
+				  message: "Item has been removed from your favorite list.",
+				  buttonLabel: "Close"
+				};
+
+				supersonic.ui.dialog.alert("Success!", options).then(function() {
+				  supersonic.logger.log("Alert closed.");
+				});
  			}
  		}
 
  		if(flag == false){
  			currentUser.addUnique("favoriteList",$scope.myItemId);
  			btn.style.backgroundColor = "#FA7F7F";
-			alert("add favorite");
+			var options = {
+			  message: "Item has been added to your favorite list.",
+			  buttonLabel: "Close"
+			};
+
+			supersonic.ui.dialog.alert("Success!", options).then(function() {
+			  supersonic.logger.log("Alert closed.");
+			});
 
 		}
 		currentUser.save();	

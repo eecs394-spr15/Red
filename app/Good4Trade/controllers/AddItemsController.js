@@ -45,7 +45,13 @@ g4tapp.controller("AddItemsController", function($scope,supersonic){
 	}
 
 	function onFail(message) {
-    alert('Failed because: ' + message);
+    	var options = {
+		  message: message,
+		  buttonLabel: "Close"
+		};
+		supersonic.ui.dialog.alert("Failed to add item", options).then(function() {
+			supersonic.logger.log("Alert closed.");
+		});
 	}
 
 });

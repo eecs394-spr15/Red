@@ -19,11 +19,27 @@ g4tapp.controller("LoginController", function($scope,supersonic){
 			user.signUp(null, {
 			success: function(user) {
 				supersonic.ui.initialView.dismiss();
-				alert("success");
+				var options = {
+				  message: "You successfully signed up!",
+				  buttonLabel: "Close"
+				};
+
+				supersonic.ui.dialog.alert("Success!", options).then(function() {
+				  supersonic.logger.log("Alert closed.");
+				});
 			},
 			error: function(user, error) {
 				// Show the error message somewhere and let the user try again.
-				alert("Error: " + error.code + " " + error.message);
+
+				var options = {
+				  message: error.code + " " + error.message,
+				  buttonLabel: "Close"
+				};
+
+				supersonic.ui.dialog.alert("Error!", options).then(function() {
+				  supersonic.logger.log("Alert closed.");
+				});
+
 			}
 		});
 	}

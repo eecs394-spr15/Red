@@ -25,7 +25,14 @@ g4tapp.controller("OffersController", function($scope,supersonic){
 			    });
 			  },
 			  error: function(object, error) {
-			    alert("retrieving offered items failed!");
+			  	var options = {
+				  message: "You successfully signed up!",
+				  buttonLabel: "Close"
+				};
+
+				supersonic.ui.dialog.alert("Success!", options).then(function() {
+				  supersonic.logger.log("Alert closed.");
+				});
 			  }
 	});
 
@@ -68,7 +75,15 @@ g4tapp.controller("OffersController", function($scope,supersonic){
 					myItem.save();
 				  },
 				  error: function(object, error) {
-				    alert("failed to retrieve owner of offered item!");
+				  	var options = {
+						  message: "Failed to retrieve owner of offered item!",
+						  buttonLabel: "Close"
+						};
+
+					supersonic.ui.dialog.alert("Success!", options).then(function() {
+					  supersonic.logger.log("Alert closed.");
+					});
+
 				  }
 
 			});

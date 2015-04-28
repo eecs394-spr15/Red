@@ -43,7 +43,12 @@ g4tapp.controller("LoginController", function($scope,supersonic){
 			}
 		});
 	}
-
+	
+	$scope.signUpButton = function(){
+		var view = new supersonic.ui.View("Good4Trade#signup");
+		supersonic.ui.layers.push(view);
+	}
+	
 	$scope.dismissInit = function(){
 		supersonic.ui.initialView.dismiss();
 	}

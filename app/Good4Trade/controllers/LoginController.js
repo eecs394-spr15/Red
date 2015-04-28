@@ -2,6 +2,11 @@ g4tapp.controller("LoginController", function($scope,supersonic){
 
 	Parse.initialize("eQLx1O6y08roi9FxLvTY5lOLdFeZ3NtmHO0tTNQF", "0fJ1VZtzTJS2d2FC4U4DxUscRYGF6Ix5Jg60W5rn");
 	//Parse.User.logOut();
+
+	$scope.refresh = function(){
+		location.reload();
+	}
+
 	var ItemForSale = Parse.Object.extend("ItemForSale");
 	$scope.signUp = function(){
 			var user = new Parse.User();

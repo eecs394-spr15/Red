@@ -4,9 +4,8 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 	Parse.initialize("eQLx1O6y08roi9FxLvTY5lOLdFeZ3NtmHO0tTNQF", "0fJ1VZtzTJS2d2FC4U4DxUscRYGF6Ix5Jg60W5rn");
 	//supersonic.ui.views.current.whenVisible( function() { location.reload(); });
 //logging in user, for testing
-
-	//Parse.User.logIn("liam", "password").then(function(user) {
-	//	alert("logged in as " + user.get("username"));					    	
+	//Parse.User.logOut();
+	//Parse.User.logIn("Default", "defaultpassword").then(function(user) {			    	
 	//});
 
 //GLOBAL CURRENT USER VARIABLE
@@ -54,7 +53,7 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 	var query6 = new Parse.Query(ItemForSale);
 
 	query6.descending("createdAt");
-
+	query6.notEqualTo("userID", currentUser.id);
 	query6.find().then(function(mItem){
 		for (var i = 0; i < mItem.length;i++){
 		iItem = mItem[i];
@@ -170,53 +169,7 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 
 // signup and login controller functions ////////////////////////////////////
 
-	$scope.signUp = function(){
-			var user = new Parse.User();
-			user.set("username", $scope.newUser.username);
-			user.set("password", $scope.newUser.password);
-			user.set("email", $scope.newUser.email);
-			user.set("phone",  $scope.newUser.phone);
-			user.set("favoriteList", []);
-			user.set("myItems", []);
-			user.signUp(null, {
-			success: function(user) {
-				supersonic.ui.initialView.dismiss();
-				alert("success");
-			},
-			error: function(user, error) {
-				// Show the error message somewhere and let the user try again.
-				alert("Error: " + error.code + " " + error.message);
-			}
-		});
-	}
-
-	$scope.dismissInit = function(){
-		supersonic.ui.initialView.dismiss();
-	}
-
-	$scope.logIn = function(){
-		Parse.User.logIn($scope.existingUser.username, $scope.existingUser.password, {
-				success: function(user) {
-					user.save(null, {
-						success: function(user) {
-						supersonic.ui.dialog.alert("Successfully Logged In.");
-						supersonic.ui.initialView.dismiss();
-						}
-					});
-				},
-				error: function( error) {
-				    var options = {
-					  message: "Log In Failed.",
-					  buttonLabel: "Close"
-					};
-
-					supersonic.ui.dialog.alert("Error", options).then(function() {
-					 supersonic.logger.log("Alert closed.");
-					});
-			  }
-			});
-	}
-
+	
 
 	$scope.editThisUser = function(){
 		var queryEditUser = new Parse.Query(Parse.User);

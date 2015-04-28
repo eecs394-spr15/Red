@@ -15,11 +15,13 @@
     </super-navigate>
 
     
-    <super-modal-show location="Good4Trade#init" class="item item-icon-left item-icon-right" ng-click="supersonic.ui.initialView.show()">
+    <super-modal-show location="Good4Trade#init" class="item item-icon-left item-icon-right" ng-click="supersonic.ui.initialView.show(); Parse.User.logOut()">
       <i class="icon icon-accessory super-log-out"></i>
       Log Out
       <i class="icon icon-accessory super-chevron-right"></i>
     </super-modal-show>
+
+
 <!--
     <super-navigate view-id="" class="item item-icon-left item-icon-right" ng-click="supersonic.ui.drawers.close()">
       <i class="icon icon-accessory super-alert"></i>

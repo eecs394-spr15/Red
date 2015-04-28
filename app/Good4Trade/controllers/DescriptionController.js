@@ -48,7 +48,7 @@ g4tapp.controller("DescriptionController", function($scope,supersonic){
 				myItem.set("description", $scope.thisItem.description);
 				myItem.set("wishList", $scope.thisItem.wishList);
 				myItem.save();
-				supersonic.ui.layers.pop();
+				//supersonic.ui.layers.pop();
 			}
 		});
 	}
@@ -58,12 +58,13 @@ g4tapp.controller("DescriptionController", function($scope,supersonic){
 	var queryToDeleteMyItem = new Parse.Query(ItemForSale);
 
 	$scope.removeThisItem = function(myItem){
-		var myArrayOfItems = currentUser.get("myItems");
-		var index = myArrayOfItems.indexOf(myItem.id);
-		if (index > -1) {
-			myArrayOfItems.splice(index, 1);
-		}
-		currentUser.set("myItems",myArrayOfItems);
+		// var myArrayOfItems = currentUser.get("myItems");
+		// var index = myArrayOfItems.indexOf(myItem.id);
+		// if (index > -1) {
+		// 	myArrayOfItems.splice(index, 1);
+		// }
+	
+		currentUser.remove("myItems", $scope.myItemId);
 		currentUser.save();
 
 		//getting all objects that may have a link to this object

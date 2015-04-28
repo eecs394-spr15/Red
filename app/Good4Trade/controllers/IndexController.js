@@ -10,6 +10,15 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 	//});
 
 //GLOBAL CURRENT USER VARIABLE
+	Parse.GeoPoint.current({
+		success: function (point) {
+			$scope.myLocation = point;
+		}
+	});
+	
+	$scope.refresh = function(){
+		location.reload();
+	}
 	
 	var currentUser = Parse.User.current();
 
@@ -24,11 +33,7 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 		$scope.items= [];
 	//	location.reload();
 	var query5 = new Parse.Query(ItemForSale);
-		Parse.GeoPoint.current({
-			success: function (point) {
-				$scope.myLocation = point;
-			}
-		});
+
 		var tmpp = $scope.myLocation;
 		//var tmpp = new Parse.GeoPoint(42, -87);
 		query.near("location", tmpp);

@@ -6,7 +6,7 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 //logging in user, for testing
 
 	//Parse.User.logIn("liam", "password").then(function(user) {
-		//alert("logged in as " + user.get("username"));					    	
+	//	alert("logged in as " + user.get("username"));					    	
 	//});
 
 //GLOBAL CURRENT USER VARIABLE
@@ -15,6 +15,10 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 			$scope.myLocation = point;
 		}
 	});
+	
+	$scope.refresh = function(){
+		location.reload();
+	}
 	
 	var currentUser = Parse.User.current();
 
@@ -30,18 +34,19 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 	//	location.reload();
 	var query5 = new Parse.Query(ItemForSale);
 
-		var tmpp = new Parse.GeoPoint(42, -87);
+		var tmpp = $scope.myLocation;
+		//var tmpp = new Parse.GeoPoint(42, -87);
 		query.near("location", tmpp);
-	query.notEqualTo("userID", currentUser.id);
+		query.notEqualTo("userID", currentUser.id);
 	// query.limit(10);
 
 	query.find().then(function(mItem){
-		for (var i = 0; i < mItem.length;i++){
+		for (var i = (mItem.length - 1); i > -1;i--){
 		iItem = mItem[i];
 		$scope.items.push({id:iItem.id, url:iItem.get("url"),title:iItem.get("title"),description:iItem.get("description"), picture:iItem.get("picture").url()});
 		}
+		
 	});
-
 }
 	$scope.sortTime = function(){
 		$scope.items= [];

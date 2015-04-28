@@ -23,7 +23,16 @@
   <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
   <div ng-hide="showSpinner">
 
-  <div style="text-align: center">
+  <div class="button-bar">
+  	<button class="button button-clear button-calm" ng-click="sortTime()">
+  		sort by time
+  	</button>
+  	<button class="button button-clear button-calm" ng-click="sortLocation()">
+  		sort by location
+  	</button>
+  </div>
+
+<!--  <div style="text-align: center">
     <button class="button button-clear button-calm" ng-click="sortTime()">
             sort by time
     </button>
@@ -32,7 +41,7 @@
     <button class="button button-clear button-calm" ng-click="sortLocation()">
             sort by location
     </button>
-  </div>
+  </div> -->
 
   <div class="list list-inset">
     <label class="item item-input">

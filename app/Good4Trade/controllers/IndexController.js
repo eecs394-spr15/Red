@@ -36,12 +36,12 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 
 		var tmpp = $scope.myLocation;
 		//var tmpp = new Parse.GeoPoint(42, -87);
-		query.near("location", tmpp);
-		query.notEqualTo("userID", currentUser.id);
+		query5.withinMiles("location", tmpp, 1000);
+		query5.notEqualTo("userID", currentUser.id);
 	// query.limit(10);
 
-	query.find().then(function(mItem){
-		for (var i = (mItem.length - 1); i > -1;i--){
+	query5.find().then(function(mItem){
+		for (var i = 0; i < mItem.length;i++){
 		iItem = mItem[i];
 		$scope.items.push({id:iItem.id, url:iItem.get("url"),title:iItem.get("title"),description:iItem.get("description"), picture:iItem.get("picture").url()});
 		}
@@ -72,7 +72,7 @@ g4tapp.controller("IndexController", function($scope,supersonic){
 		query.descending("createdAt");
 	}else {
 		var tmpp = new Parse.GeoPoint(42, -87);
-		query.near("location", tmpp);
+		query.withinMiles("location", tmpp, 1000);
 	}
 	query.notEqualTo("userID", currentUser.id);
 	// query.limit(10);

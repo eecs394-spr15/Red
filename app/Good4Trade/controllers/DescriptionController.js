@@ -15,6 +15,7 @@ g4tapp.controller("DescriptionController", function($scope,supersonic){
 	$scope.iTitle = "";
 	$scope.iWishList = "";
 	$scope.iDescription = "";
+	$scope.iHeartStyle = false;
 	$scope.iLocation = new Parse.GeoPoint(0, 0);
 	Parse.GeoPoint.current({
 		success: function (point) {
@@ -120,21 +121,32 @@ g4tapp.controller("DescriptionController", function($scope,supersonic){
 		});
 	}
 
-	$scope.removeFavorite = function(){
-		currentUser.remove("favoriteList",$scope.myItemId);
-		var options = {
-			message: "Item has been removed from your favorite list.",
-			buttonLabel: "Close"
-		};
-		supersonic.ui.dialog.alert("Success!", options).then(function() {
-			supersonic.logger.log("Alert closed.");
-		});
-		currentUser.save();
+	// $scope.removeFavorite = function(){
+	// 	currentUser.remove("favoriteList",$scope.myItemId);
+	// 	var options = {
+	// 		message: "Item has been removed from your favorite list.",
+	// 		buttonLabel: "Close"
+	// 	};
+	// 	supersonic.ui.dialog.alert("Success!", options).then(function() {
+	// 		supersonic.logger.log("Alert closed.");
+	// 	});
+	// 	currentUser.save();
+	// }
+
+	//use for get the style of favorite button before load the page
+	$scope.getFlag = function(){
+		var favoriteList = currentUser.get("favoriteList");
+ 		for(var i=0; i < favoriteList.length; i++){
+ 			if(favoriteList[i] == $scope.myItemId){
+ 			    $scope.iHeartStyle = true;
+ 			    
+ 			}
+ 		}
 	}
 
-	$scope.editFavorite = function(heartbutton){
+	$scope.editFavorite = function(){
 
-		var btn = document.getElementById('heartbutton');
+		//var btn = document.getElementById('heartbutton');
 /*
 	if (count == 0){
         btn.style.backgroundColor = "#DC143C";
@@ -146,27 +158,21 @@ g4tapp.controller("DescriptionController", function($scope,supersonic){
     }
 
 */
-		var flag = false;
- 		var favoriteList = currentUser.get("favoriteList");
- 		for(var i=0; i < length; i++){
- 			if(favoriteList[i] == $scope.myItemId){
- 			    flag = true;
- 				currentUser.remove("favoriteList",$scope.myItemId);
- 				btn.style.backgroundColor = "#0099FF"
- 				var options = {
-				  message: "Item has been removed from your favorite list.",
-				  buttonLabel: "Close"
-				};
-
-				supersonic.ui.dialog.alert("Success!", options).then(function() {
+		if($scope.iHeartStyle == true){
+ 			$scope.iHeartStyle = false;
+ 			currentUser.remove("favoriteList",$scope.myItemId);
+ 			//btn.style.backgroundColor = "#0099FF"
+ 			var options = {
+ 				  message: "Item has been removed from your favorite list.",
+ 				  buttonLabel: "Close"
+ 				};
+ 			supersonic.ui.dialog.alert("Success!", options).then(function() {
 				  supersonic.logger.log("Alert closed.");
 				});
- 			}
- 		}
-
- 		if(flag == false){
+ 		}else{
+ 			$scope.iHeartStyle = true;
  			currentUser.addUnique("favoriteList",$scope.myItemId);
- 			btn.style.backgroundColor = "#FA7F7F";
+ 			//btn.style.backgroundColor = "#FA7F7F";
 			var options = {
 			  message: "Item has been added to your favorite list.",
 			  buttonLabel: "Close"

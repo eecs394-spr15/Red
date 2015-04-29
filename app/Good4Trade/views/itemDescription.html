@@ -1,4 +1,4 @@
-<div ng-controller="DescriptionController">
+<div ng-controller="DescriptionController" ng-init="getFlag()">
   <super-navbar>
     <super-navbar-title>
       Description
@@ -41,7 +41,14 @@
   		{{distance}} miles away from my current location.
   	</div>
   	
-    <button class="button icon-left super-ios7-heart-outline button-block button-calm" id="heartbutton" ng-click="editFavorite('heartbutton')">
+    <button 
+      ng-class= "{'button':true,
+                  'icon-left':true,
+                  'super-ios7-heart-outline':true, 
+                  'button-block':true,
+                  'button-calm':!iHeartStyle,
+                  'button-assertive':iHeartStyle}"
+     id="heartbutton" ng-click="editFavorite()">
 		Add to Favorites
     </button>
 </div>
